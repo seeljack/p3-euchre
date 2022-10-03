@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include "Card.h"
+using namespace std;
 // add any necessary #include or using directives here
 
 // rank and suit names -- do not remove these
@@ -29,7 +30,7 @@ constexpr const char* const Card::SUIT_DIAMONDS;
 // add your code below
 //EFFECTS Initializes Card to the Two of Spades
 Card::Card(){
-    assert(false);
+    : rank(RANK_TWO), suit(SUIT_SPADES){}
 }
 
 //REQUIRES rank is one of "Two", "Three", "Four", "Five", "Six", "Seven",
@@ -37,29 +38,35 @@ Card::Card(){
 //  suit is one of "Spades", "Hearts", "Clubs", "Diamonds"
 //EFFECTS Initializes Card to specified rank and suit
 Card::Card(const std::string &rank_in, const std::string &suit_in){
-    assert(false);
+    : rank(rank_in), suit(suit_in){}
 }
 
 //EFFECTS Returns the rank
 std::string Card::get_rank() const{
-    assert(false);
+    return rank;
 }
 
 //EFFECTS Returns the suit.  Does not consider trump.
 std::string Card::get_suit() const{
-    assert(false);
+    return suit;
 }
 
 //REQUIRES trump is a valid suit
 //EFFECTS Returns the suit
 //HINT: the left bower is the trump suit!
 std::string Card::get_suit(const std::string &trump) const{
-    assert(false);
+    return get_suit(trump);
 }
 
 //EFFECTS Returns true if card is a face card (Jack, Queen, King or Ace)
 bool Card::is_face_or_ace() const{
-    assert(false);
+    string rank = get_rank();
+    if(rank == "Jack" || rank == "Queen" || rank == "King" || rank == "Ace"){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 
 //REQUIRES trump is a valid suit
