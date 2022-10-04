@@ -125,55 +125,156 @@ bool Card::is_trump(const std::string &trump) const{
 //EFFECTS Returns true if lhs is lower value than rhs.
 //  Does not consider trump.
 bool operator<(const Card &lhs, const Card &rhs){
-    assert(false);
+    int lhs_rank = -1;
+    int rhs_rank = -1;
+    for(int i = 0; i < NUM_RANKS; i++) {
+        if (RANK_NAMES_BY_WEIGHT[i] == lhs.get_rank()) {
+            lhs_rank = i;
+        }
+        if (RANK_NAMES_BY_WEIGHT[i] == rhs.get_rank()) {
+            rhs_rank = i;
+        }
+    }
+    return lhs_rank < rhs_rank;
 }
 
 //EFFECTS Returns true if lhs is lower value than rhs or the same card as rhs.
 //  Does not consider trump.
 bool operator<=(const Card &lhs, const Card &rhs){
-    assert(false);
+    int lhs_rank = -1;
+    int rhs_rank = -1;
+    for(int i = 0; i < NUM_RANKS; i++) {
+        if (RANK_NAMES_BY_WEIGHT[i] == lhs.get_rank()) {
+            lhs_rank = i;
+        }
+        if (RANK_NAMES_BY_WEIGHT[i] == rhs.get_rank()) {
+            rhs_rank = i;
+        }
+    }
+    return lhs_rank <= rhs_rank;
 }
 
 //EFFECTS Returns true if lhs is higher value than rhs.
 //  Does not consider trump.
 bool operator>(const Card &lhs, const Card &rhs){
-    assert(false);
+    int lhs_rank = -1;
+    int rhs_rank = -1;
+    for(int i = 0; i < NUM_RANKS; i++) {
+        if (RANK_NAMES_BY_WEIGHT[i] == lhs.get_rank()) {
+            lhs_rank = i;
+        }
+        if (RANK_NAMES_BY_WEIGHT[i] == rhs.get_rank()) {
+            rhs_rank = i;
+        }
+    }
+    return lhs_rank > rhs_rank;
 }
+
 
 //EFFECTS Returns true if lhs is higher value than rhs or the same card as rhs.
 //  Does not consider trump.
 bool operator>=(const Card &lhs, const Card &rhs){
-    assert(false);
+    int lhs_rank = -1;
+    int rhs_rank = -1;
+    for(int i = 0; i < NUM_RANKS; i++) {
+        if (RANK_NAMES_BY_WEIGHT[i] == lhs.get_rank()) {
+            lhs_rank = i;
+        }
+        if (RANK_NAMES_BY_WEIGHT[i] == rhs.get_rank()) {
+            rhs_rank = i;
+        }
+    }
+    return lhs_rank >= rhs_rank;
 }
 
 //EFFECTS Returns true if lhs is same card as rhs.
 //  Does not consider trump.
 bool operator==(const Card &lhs, const Card &rhs){
-    assert(false);
+    if (lhs.get_suit() == rhs.get_suit()) {
+        if (lhs.get_rank() == rhs.get_rank()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
 }
+
 
 //EFFECTS Returns true if lhs is not the same card as rhs.
 //  Does not consider trump.
 bool operator!=(const Card &lhs, const Card &rhs){
-    assert(false);
+    if (lhs.get_suit() == rhs.get_suit()) {
+        if (lhs.get_rank() == rhs.get_rank()) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    else {
+        return true;
+    }
 }
 
 //REQUIRES suit is a valid suit
 //EFFECTS returns the next suit, which is the suit of the same color
 std::string Suit_next(const std::string &suit){
-    assert(false);
+    if (suit == Card::SUIT_SPADES) {
+        return Card::SUIT_CLUBS;
+    }
+    else if (suit == Card::SUIT_CLUBS) {
+        return Card::SUIT_SPADES;
+    }
+    else if (suit == Card::SUIT_DIAMONDS) {
+        return Card::SUIT_HEARTS;
+    }
+    else {
+        return Card::SUIT_DIAMONDS;
+    }
 }
 
 //EFFECTS Prints Card to stream, for example "Two of Spades"
 std::ostream & operator<<(std::ostream &os, const Card &card){
-    assert(false);
+    return os << card.get_rank() << " of " << card.get_suit();
 }
 
 //REQUIRES trump is a valid suit
 //EFFECTS Returns true if a is lower value than b.  Uses trump to determine
 // order, as described in the spec.
 bool Card_less(const Card &a, const Card &b, const std::string &trump){
-    assert(false);
+    if (a == b) {
+        return false;
+    }
+    else if(!a.is_trump(trump) && !b.is_trump(trump)) { //both not trump
+        return a < b;
+    }
+    else if (!a.is_trump(trump)) { //if a is not trump, b must be
+        return true;
+    }
+    else if (!b.is_trump(trump)) { //if b is not, a must be
+        return false;
+    }
+    else {
+        if (a.is_right_bower(trump)) {
+            return false;
+        }
+        else if(b.is_right_bower(trump)) {
+            return true;
+        }
+        else if (a.is_left_bower(trump)) {
+            return false;
+        }
+        else if (b.is_left_bower(trump)) {
+            return true;
+        }
+        else {
+            return a < b;
+        }
+    }
 }
 
 //REQUIRES trump is a valid suit
@@ -181,7 +282,44 @@ bool Card_less(const Card &a, const Card &b, const std::string &trump){
 //  and the suit led to determine order, as described in the spec.
 bool Card_less(const Card &a, const Card &b, const Card &led_card,
              const std::string &trump){
-    assert(false);
+//    if (a == b) {
+//        return false;
+//    }
+//    else if (!a.is_trump(trump) && !b.is_trump(trump) && !led_card.is_trump(trump)) {
+//        if (led_card.get_suit() != b.get_suit()) {
+//            if (led_card.get_suit() != a.get_suit()) {
+//                return a < b;
+//            }
+//        }
+//    }
+    if (led_card.is_trump(trump)){
+        return Card_less(a, b, trump);
+    }
+    else {
+        if (a.is_trump(trump) && b.is_trump(trump)) { //lead is not trump but a and b are
+            return Card_less(a, b, trump);
+        }
+        else if (a.is_trump(trump)) {
+            return false;
+        }
+        else if (b.is_trump(trump)) {
+            return true;
+        }
+        else if (a.get_suit() == led_card.get_suit() && b.get_suit() == \
+                 led_card.get_suit()) {
+            //lead, a and b are not trump, a and b both match suit with lead
+                return a < b;
+            }
+        else if (a.get_suit() == led_card.get_suit()) { //a matches suit but b doesnt
+            return false;
+        }
+        else if (b.get_suit() == led_card.get_suit()) { //b matches but a doesn't
+            return true;
+        }
+        else {
+            return a < b; //a and b are not trump and do not match lead
+        }
+    }
 }
 
 

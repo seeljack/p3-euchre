@@ -7,17 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BA5CA98728EB7A7A005BD9CD /* Pack_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA97328EB7A7A005BD9CD /* Pack_tests.cpp */; };
-		BA5CA98828EB7A7A005BD9CD /* Player_public_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA97528EB7A7A005BD9CD /* Player_public_test.cpp */; };
-		BA5CA98928EB7A7A005BD9CD /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA97928EB7A7A005BD9CD /* Player.cpp */; };
-		BA5CA98A28EB7A7A005BD9CD /* euchre.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA97A28EB7A7A005BD9CD /* euchre.cpp */; };
 		BA5CA98B28EB7A7A005BD9CD /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA97B28EB7A7A005BD9CD /* Makefile */; };
-		BA5CA98C28EB7A7A005BD9CD /* Player_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA97C28EB7A7A005BD9CD /* Player_tests.cpp */; };
 		BA5CA98D28EB7A7A005BD9CD /* Card_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA97E28EB7A7A005BD9CD /* Card_tests.cpp */; };
-		BA5CA98E28EB7A7A005BD9CD /* Pack_public_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA97F28EB7A7A005BD9CD /* Pack_public_test.cpp */; };
-		BA5CA98F28EB7A7A005BD9CD /* Card_public_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA98128EB7A7A005BD9CD /* Card_public_test.cpp */; };
 		BA5CA99028EB7A7A005BD9CD /* Card.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA98228EB7A7A005BD9CD /* Card.cpp */; };
-		BA5CA99128EB7A7A005BD9CD /* Pack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA98428EB7A7A005BD9CD /* Pack.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -160,15 +152,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA5CA98B28EB7A7A005BD9CD /* Makefile in Sources */,
-				BA5CA98E28EB7A7A005BD9CD /* Pack_public_test.cpp in Sources */,
 				BA5CA98D28EB7A7A005BD9CD /* Card_tests.cpp in Sources */,
-				BA5CA98728EB7A7A005BD9CD /* Pack_tests.cpp in Sources */,
-				BA5CA98828EB7A7A005BD9CD /* Player_public_test.cpp in Sources */,
-				BA5CA98928EB7A7A005BD9CD /* Player.cpp in Sources */,
-				BA5CA99128EB7A7A005BD9CD /* Pack.cpp in Sources */,
-				BA5CA98C28EB7A7A005BD9CD /* Player_tests.cpp in Sources */,
-				BA5CA98A28EB7A7A005BD9CD /* euchre.cpp in Sources */,
-				BA5CA98F28EB7A7A005BD9CD /* Card_public_test.cpp in Sources */,
 				BA5CA99028EB7A7A005BD9CD /* Card.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
