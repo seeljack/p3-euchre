@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Pack.h"
 #include "Card.h"
+#include "vector"
 using namespace std;
 
                 //HUMAN
@@ -44,9 +45,9 @@ bool Human::make_trump(const Card &upcard, bool is_dealer,
         }
         else if (input == upcard.get_suit()) {
             order_up_suit = upcard.get_suit();
-            if (is_dealer) {
-                add_and_discard(upcard);
-            }
+            // if (is_dealer) {
+            //     add_and_discard(upcard);
+            // }
             return true;
         }
     }
@@ -67,7 +68,9 @@ bool Human::make_trump(const Card &upcard, bool is_dealer,
             }
         }
     }
-}
+    //Added this so it would compile:
+    return false;
+ }
     //REQUIRES Player has at least one card
     //EFFECTS  Player adds one card to hand and removes one card from hand.
 void Human::add_and_discard(const Card &upcard){
@@ -128,13 +131,88 @@ void Simple::add_card(const Card &c){
     //  not modify order_up_suit and return false.
 bool Simple::make_trump(const Card &upcard, bool is_dealer,
                         int round, std::string &order_up_suit) const{
-    assert(false);
+    int count_of_upcard = 0;   
+    string other_suit;
+    int count_round2 = 0;                    
+    if(round == 1){
+        for(int i = 0; i < Hand.size(); i++){
+            if(Hand[i].get_suit() == upcard.get_suit() && (Hand[i].is_face_or_ace() || Hand[i].is_left_bower(upcard.get_suit()) || Hand[i].is_right_bower(upcard.get_suit()))){
+                count_of_upcard += 1;
+            }
+        }
+        if(count_of_upcard >=2){
+            order_up_suit = upcard.get_suit();
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+    //Round 2
+    else{
+        if(is_dealer){
+            string suit = upcard.get_suit();
+            if(suit == upcard.SUIT_CLUBS){
+                order_up_suit = upcard.SUIT_SPADES;
+            }
+            else if(suit == upcard.SUIT_SPADES){
+                order_up_suit = upcard.SUIT_CLUBS;
+            }
+            else if(suit == upcard.SUIT_DIAMONDS){
+                order_up_suit = upcard.SUIT_HEARTS;
+            }
+            else{
+                order_up_suit = upcard.SUIT_DIAMONDS;
+            }
+            return true;
+        }
+        else{
+            string suit = upcard.get_suit();
+            if(suit == upcard.SUIT_CLUBS){
+                other_suit = upcard.SUIT_SPADES;
+            }
+            else if(suit == upcard.SUIT_SPADES){
+                other_suit = upcard.SUIT_CLUBS;
+            }
+            else if(suit == upcard.SUIT_DIAMONDS){
+                other_suit = upcard.SUIT_HEARTS;
+            }
+            else{
+                other_suit = upcard.SUIT_DIAMONDS;
+            }
+
+            for(int i = 0; i < Hand.size(); i++){
+                if(Hand[i].get_suit() == other_suit){
+                    count_round2 +=1;
+                }
+            }
+            if(count_round2 >= 1){
+                order_up_suit = other_suit;
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    }
+
 }
     
     //REQUIRES Player has at least one card
     //EFFECTS  Player adds one card to hand and removes one card from hand.
 void Simple::add_and_discard(const Card &upcard){
-    assert(false);
+    Card min = Hand[0];
+    int min_num = 0;
+    for(int i = 0; i < 5; i++){
+        if(Card_less(Hand[i],min, upcard.get_suit())){
+            min = Hand[i];
+            min_num = i;
+        }
+    }
+    Hand.erase(Hand.begin()+(min_num - 1));
+    add_card(upcard);
+    
 }
     
     //REQUIRES Player has at least one card, trump is a valid suit
@@ -142,14 +220,69 @@ void Simple::add_and_discard(const Card &upcard){
     //  "Lead" means to play the first Card in a trick.  The card
     //  is removed the player's hand.
 Card Simple::lead_card(const std::string &trump){
-    assert(false);
+    int has_all_trump = 0;
+    for(int i = 0; i < Hand.size(); i++){
+        if(Hand[i].get_suit() == trump){
+            has_all_trump += 1;
+        }
+    }
+    if(has_all_trump == Hand.size()){
+        //plays highest value card
+        Card max = Hand[0];
+        for(int i = 0; i < Hand.size(); i++){
+            if(operator>(Hand[i], max)){
+                max = Hand[i];
+            }
+        }
+        return play_card(max,trump);
+    }
+    else{
+        Card max;
+        for(int i = 0; i < Hand.size(); i++){
+            if(Hand[i].get_suit() != trump){
+                Card max = Hand[i];
+                break;
+            }
+       }
+        for(int i = 0; i < Hand.size(); i++){
+            if((operator>(Hand[i], max)) &&  Hand[i].get_suit()!= trump){
+                max = Hand[i];
+            }
+    }
+        return play_card(max,trump);
+ }
 }
     
     //REQUIRES Player has at least one card, trump is a valid suit
     //EFFECTS  Plays one Card from Player's hand according to their strategy.
     //  The card is removed from the player's hand
 Card Simple::play_card(const Card &led_card, const std::string &trump){
-    assert(false);
+    Card highest_follow_suit;
+    bool has_follow_suit = false;
+    for(int i = 0; i < Hand.size(); i++){
+        if(Hand[i].get_suit() == led_card.get_suit()){
+            highest_follow_suit = Hand[i];
+            has_follow_suit = true;
+            break;
+        }
+    }
+    if(has_follow_suit == true){
+        for(int i = 0; i < Hand.size(); i++){
+            if(Hand[i].get_suit() == led_card.get_suit() && operator>(Hand[i],highest_follow_suit)){
+                highest_follow_suit = Hand[i];
+            }
+        }
+        return play_card(highest_follow_suit,trump);
+    }
+    else{
+        Card min = Hand[0];
+        for(int i = 0; i < Hand.size(); i++){
+            if(operator<(Hand[i],min)){
+                min = Hand[i];
+            }
+        }
+       return play_card(min,trump);
+    }
 }
     
     
