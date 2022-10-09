@@ -28,7 +28,7 @@ public:
   //           format required by the project specification
   // MODIFIES: pack_input
   // EFFECTS: Initializes Pack by reading from pack_input.
-  Pack(std::istream& pack_input);
+    Pack(std::istream& pack_input);
 
   // REQUIRES: cards remain in the Pack
   // EFFECTS: Returns the next card in the pack and increments the next index

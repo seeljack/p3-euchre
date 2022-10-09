@@ -29,7 +29,7 @@ Pack::Pack() {
 //           format required by the project specification
 // MODIFIES: pack_input
 // EFFECTS: Initializes Pack by reading from pack_input.
-Pack::Pack(std::istream& pack_input){
+Pack::Pack(istream& pack_input){
     for(int i =0; i < PACK_SIZE; i++){
         string rank;
         string junk;
