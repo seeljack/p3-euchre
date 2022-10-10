@@ -10,7 +10,7 @@
 		BA1FC88328F3B25300438BA4 /* Card.h in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA98528EB7A7A005BD9CD /* Card.h */; };
 		BA1FC88428F3B25300438BA4 /* Pack.h in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA97D28EB7A7A005BD9CD /* Pack.h */; };
 		BA1FC88528F3B25300438BA4 /* Player.h in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA98628EB7A7A005BD9CD /* Player.h */; };
-		BA1FC89328F3D69A00438BA4 /* Player_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA97C28EB7A7A005BD9CD /* Player_tests.cpp */; };
+		BA1FC89528F3DEEB00438BA4 /* Player_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA97C28EB7A7A005BD9CD /* Player_tests.cpp */; };
 		BA5CA99028EB7A7A005BD9CD /* Card.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA98228EB7A7A005BD9CD /* Card.cpp */; };
 		BAB4D3CB28F2423700F4A928 /* Pack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA98428EB7A7A005BD9CD /* Pack.cpp */; };
 		BAB4D3CC28F2423700F4A928 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA97928EB7A7A005BD9CD /* Player.cpp */; };
@@ -155,7 +155,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA1FC89328F3D69A00438BA4 /* Player_tests.cpp in Sources */,
+				BA1FC89528F3DEEB00438BA4 /* Player_tests.cpp in Sources */,
 				BA1FC88328F3B25300438BA4 /* Card.h in Sources */,
 				BA1FC88428F3B25300438BA4 /* Pack.h in Sources */,
 				BA1FC88528F3B25300438BA4 /* Player.h in Sources */,

@@ -4,6 +4,7 @@
 #include "unit_test_framework.h"
 
 #include <iostream>
+#include <cassert>
 
 using namespace std;
 
@@ -30,6 +31,8 @@ TEST(test_simple_make_trump) {
     alice->add_card(c5);
     assert(alice->make_trump(upcard, false, 1, s));
     ASSERT_EQUAL(s, Card::SUIT_SPADES);
+    
+    delete alice;
 }
 
 TEST(test_simple_lead) {
@@ -48,7 +51,7 @@ TEST(test_simple_lead) {
     alice->add_card(c5);
     
     ASSERT_TRUE(c1 == alice->lead_card(Card::SUIT_SPADES));
-
+    delete alice;
 }
 TEST(test_simple_play_card) {
     Player * alice = Player_factory("Alice", "Simple");
@@ -67,6 +70,7 @@ TEST(test_simple_play_card) {
     alice->add_card(c5);
     
     ASSERT_TRUE(c3 == alice->play_card(upcard, Card::SUIT_DIAMONDS));
+    delete alice;
 }
 // Add more tests here
 

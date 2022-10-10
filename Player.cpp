@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 #include "Player.h"
-#include "Pack.h"
 #include "Card.h"
 #include "vector"
 using namespace std;
@@ -297,6 +296,8 @@ public:
             return min;
         }
     }
+    
+    ~Simple() {}
 };
     
 
@@ -311,9 +312,8 @@ Player * Player_factory(const std::string &name, const std::string &strategy) {
         else if (strategy == "Human") {
             return new Human(name);
         }
-    else{
-        return nullptr;
-    }
+    assert(false);
+    return nullptr;
 }
     //EFFECTS: Prints player's name to os
 std::ostream & operator<<(std::ostream &os, const Player &p) {
