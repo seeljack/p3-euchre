@@ -96,8 +96,8 @@ bool Pack::empty() const{
         return true;
     }
     else {
-        return false;
         cout << next << "\n";
+        return false;
     }
 }
 

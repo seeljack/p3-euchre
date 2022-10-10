@@ -5,9 +5,9 @@
  * Represents a single playing card
  * Project UID 1d9f47bfc76643019cfbf037641defe1
  *
- * by Andrew DeOrio
- * awdeorio@umich.edu
- * 2014-12-21
+ * by Josh Cussen and Jack Seel
+ * jcussen@umich.edu and seeljack@umich.edu
+ * 10/9/22
  */
 
 #include <iostream>

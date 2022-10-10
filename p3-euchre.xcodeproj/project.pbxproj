@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BA5CA98B28EB7A7A005BD9CD /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA97B28EB7A7A005BD9CD /* Makefile */; };
-		BA5CA98D28EB7A7A005BD9CD /* Card_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA97E28EB7A7A005BD9CD /* Card_tests.cpp */; };
+		BA1FC88328F3B25300438BA4 /* Card.h in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA98528EB7A7A005BD9CD /* Card.h */; };
+		BA1FC88428F3B25300438BA4 /* Pack.h in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA97D28EB7A7A005BD9CD /* Pack.h */; };
+		BA1FC88528F3B25300438BA4 /* Player.h in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA98628EB7A7A005BD9CD /* Player.h */; };
+		BA1FC89128F3D2E000438BA4 /* Player_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA97C28EB7A7A005BD9CD /* Player_tests.cpp */; };
 		BA5CA99028EB7A7A005BD9CD /* Card.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA98228EB7A7A005BD9CD /* Card.cpp */; };
 		BAB4D3CB28F2423700F4A928 /* Pack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA98428EB7A7A005BD9CD /* Pack.cpp */; };
 		BAB4D3CC28F2423700F4A928 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA97928EB7A7A005BD9CD /* Player.cpp */; };
-		BAB4D3CD28F2424200F4A928 /* Player_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA97C28EB7A7A005BD9CD /* Player_tests.cpp */; };
-		BAB4D3CE28F2425200F4A928 /* Pack_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5CA97328EB7A7A005BD9CD /* Pack_tests.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -155,12 +155,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BAB4D3CE28F2425200F4A928 /* Pack_tests.cpp in Sources */,
-				BAB4D3CD28F2424200F4A928 /* Player_tests.cpp in Sources */,
+				BA1FC89128F3D2E000438BA4 /* Player_tests.cpp in Sources */,
+				BA1FC88328F3B25300438BA4 /* Card.h in Sources */,
+				BA1FC88428F3B25300438BA4 /* Pack.h in Sources */,
+				BA1FC88528F3B25300438BA4 /* Player.h in Sources */,
 				BAB4D3CB28F2423700F4A928 /* Pack.cpp in Sources */,
 				BAB4D3CC28F2423700F4A928 /* Player.cpp in Sources */,
-				BA5CA98B28EB7A7A005BD9CD /* Makefile in Sources */,
-				BA5CA98D28EB7A7A005BD9CD /* Card_tests.cpp in Sources */,
 				BA5CA99028EB7A7A005BD9CD /* Card.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
