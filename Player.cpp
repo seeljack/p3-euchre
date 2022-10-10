@@ -213,16 +213,16 @@ public:
     
     //REQUIRES Player has at least one card
     //EFFECTS  Player adds one card to hand and removes one card from hand.
-    void add_and_discard(const Card &upcard){
+ void add_and_discard(const Card &upcard){
         Card min = Hand[0];
         int min_num = 0;
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < Hand.size(); i++){
             if(Card_less(Hand[i],min, upcard.get_suit())){
                 min = Hand[i];
                 min_num = i;
             }
         }
-        Hand.erase(Hand.begin()+(min_num - 1));
+        Hand.erase(Hand.begin()+ min_num);
         add_card(upcard);
         
     }
