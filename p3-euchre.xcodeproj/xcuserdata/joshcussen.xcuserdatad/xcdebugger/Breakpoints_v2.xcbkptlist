@@ -30,8 +30,8 @@
             filePath = "Player.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "490"
-            endingLineNumber = "490"
+            startingLineNumber = "319"
+            endingLineNumber = "319"
             landmarkName = "operator&lt;&lt;(os, p)"
             landmarkType = "9">
          </BreakpointContent>
@@ -46,8 +46,8 @@
             filePath = "Player.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "491"
-            endingLineNumber = "491"
+            startingLineNumber = "320"
+            endingLineNumber = "320"
             landmarkName = "operator&lt;&lt;(os, p)"
             landmarkType = "9">
          </BreakpointContent>
