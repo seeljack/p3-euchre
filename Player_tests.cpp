@@ -63,7 +63,7 @@ TEST(test_simple_lead) {
     alice->add_card(c4);
     alice->add_card(c5);
     
-    ASSERT_TRUE(c1 == alice->lead_card(Card::SUIT_SPADES));
+    ASSERT_TRUE(c4 == alice->lead_card(Card::SUIT_SPADES));
     ASSERT_TRUE(c1 == alice->lead_card(Card::SUIT_HEARTS));
     ASSERT_TRUE(c1 == alice->lead_card(Card::SUIT_DIAMONDS));
     ASSERT_TRUE(c1 == alice->lead_card(Card::SUIT_CLUBS));
@@ -101,6 +101,68 @@ TEST(test_simple_play_card) {
     ASSERT_TRUE(c5 == alice->play_card(upcard2, Card::SUIT_DIAMONDS));
     ASSERT_TRUE(c5 == alice->play_card(upcard2, Card::SUIT_SPADES));
     delete alice;
+}
+
+TEST(test_small_add){
+    Player * alice = Player_factory("Alice", "Simple");
+    Card c1(Card::RANK_ACE, Card::SUIT_SPADES);
+    Card c3(Card::RANK_QUEEN, Card::SUIT_CLUBS);
+    alice->add_card(c1);
+    Card upcard2(Card::RANK_QUEEN, Card::SUIT_HEARTS);
+
+    alice->add_and_discard(upcard2);
+
+    ASSERT_TRUE(upcard2 == alice->play_card(c3,Card::SUIT_SPADES));
+
+    delete alice;
+}
+
+TEST(test_lead_card_only_trump){
+    Player * alice = Player_factory("Alice", "Simple");
+    Card c1(Card::RANK_ACE, Card::SUIT_SPADES);
+    Card c2(Card::RANK_KING, Card::SUIT_SPADES);
+    Card c3(Card::RANK_QUEEN, Card::SUIT_SPADES);
+    Card c4(Card::RANK_JACK, Card::SUIT_SPADES);
+    Card c5(Card::RANK_TEN, Card::SUIT_SPADES);
+    Card upcard1(Card::RANK_ACE, Card::SUIT_CLUBS);
+    Card upcard2(Card::RANK_QUEEN, Card::SUIT_HEARTS);
+    Card upcard3(Card::RANK_NINE, Card::SUIT_DIAMONDS);
+
+    alice->add_card(c1);
+    alice->add_card(c2);
+    alice->add_card(c3);
+    alice->add_card(c4);
+    alice->add_card(c5);
+
+    ASSERT_TRUE(c4 == alice->lead_card(Card::SUIT_SPADES));
+    ASSERT_TRUE(c5 == alice->play_card(upcard1,Card::SUIT_CLUBS));
+    ASSERT_EQUAL(c3, alice->play_card(upcard2,Card::SUIT_CLUBS));
+    ASSERT_TRUE(c2 == alice->play_card(upcard1,Card::SUIT_CLUBS));
+    ASSERT_TRUE(c1 == alice->play_card(upcard3,Card::SUIT_CLUBS));
+
+    delete alice;
+}
+
+TEST(test_new){
+    Player * alice = Player_factory("Alice", "Simple");
+    Card c1(Card::RANK_ACE, Card::SUIT_SPADES);
+    Card c2(Card::RANK_NINE, Card::SUIT_SPADES);
+    Card c3(Card::RANK_QUEEN, Card::SUIT_SPADES);
+    Card c4(Card::RANK_JACK, Card::SUIT_SPADES);
+    Card c5(Card::RANK_TEN, Card::SUIT_SPADES);
+    Card upcard100(Card::RANK_KING, Card::SUIT_SPADES);
+    Card upcard2(Card::RANK_QUEEN, Card::SUIT_HEARTS);
+    Card upcard3(Card::RANK_NINE, Card::SUIT_DIAMONDS);
+
+    alice->add_card(c1);
+    alice->add_card(c2);
+    alice->add_card(c3);
+    alice->add_card(c4);
+    alice->add_card(c5);
+
+    ASSERT_EQUAL(c4,alice->play_card(upcard100,Card::SUIT_SPADES));
+
+
 }
 // Add more tests here
 
