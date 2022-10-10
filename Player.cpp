@@ -257,32 +257,33 @@ Card Simple::lead_card(const std::string &trump){
     //EFFECTS  Plays one Card from Player's hand according to their strategy.
     //  The card is removed from the player's hand
 Card Simple::play_card(const Card &led_card, const std::string &trump){
-    Card highest_follow_suit;
-    bool has_follow_suit = false;
-    for(int i = 0; i < Hand.size(); i++){
-        if(Hand[i].get_suit() == led_card.get_suit()){
-            highest_follow_suit = Hand[i];
-            has_follow_suit = true;
-            break;
-        }
-    }
-    if(has_follow_suit == true){
-        for(int i = 0; i < Hand.size(); i++){
-            if(Hand[i].get_suit() == led_card.get_suit() && operator>(Hand[i],highest_follow_suit)){
-                highest_follow_suit = Hand[i];
-            }
-        }
-        return play_card(highest_follow_suit,trump);
-    }
-    else{
-        Card min = Hand[0];
-        for(int i = 0; i < Hand.size(); i++){
-            if(operator<(Hand[i],min)){
-                min = Hand[i];
-            }
-        }
-       return play_card(min,trump);
-    }
+    // Card highest_follow_suit;
+    // bool has_follow_suit = false;
+    // for(int i = 0; i < Hand.size(); i++){
+    //     if(Hand[i].get_suit() == led_card.get_suit()){
+    //         highest_follow_suit = Hand[i];
+    //         has_follow_suit = true;
+    //         break;
+    //     }
+    // }
+    // if(has_follow_suit == true){
+    //     for(int i = 0; i < Hand.size(); i++){
+    //         if(Hand[i].get_suit() == led_card.get_suit() && operator>(Hand[i],highest_follow_suit)){
+    //             highest_follow_suit = Hand[i];
+    //         }
+    //     }
+    //     return play_card(highest_follow_suit,trump);
+    // }
+    // else{
+    //     Card min = Hand[0];
+    //     for(int i = 0; i < Hand.size(); i++){
+    //         if(operator<(Hand[i],min)){
+    //             min = Hand[i];
+    //         }
+    //     }
+    //    return play_card(min,trump);
+    // }
+    assert(false);
 }
     
     
