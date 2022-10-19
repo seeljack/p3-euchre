@@ -100,4 +100,3 @@ bool Pack::empty() const{
         return false;
     }
 }
-

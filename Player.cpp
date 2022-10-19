@@ -234,9 +234,9 @@ public:
     Card lead_card(const std::string &trump){
         int has_all_trump = 0;
         int is_left = 0;
-        int is_left_num = 0;
-        int max_iterator = 0;
-        int real_is_left_num;
+       // int is_left_num = 0;
+       // int max_iterator = 0;
+       // int real_is_left_num;
         for(int i = 0; i < Hand.size(); i++){
             if(Hand[i].get_suit() == trump || Hand[i].is_left_bower(trump)){
                 has_all_trump += 1;
@@ -247,23 +247,24 @@ public:
             Card max = Hand[0];
             Card is_left_b = Hand[0];
             for(int i = 0; i < Hand.size(); i++){
-                max_iterator += 1;
-                is_left_num += 1;
+            //    max_iterator += 1;
+             //   is_left_num += 1;
                 if(Hand[i].is_right_bower(trump)){
                     Card trump1;
                     trump1 = Hand[i];
                     // trump1 = play_card(trump1,trump);
                     // Hand.erase(Hand.begin()+ i);
+                    Hand.erase(Hand.begin()+ i);
                     return trump1;
                 }
                 else if(Hand[i].is_left_bower(trump)){
                     is_left = 1;
-                    real_is_left_num = is_left_num;
+                 //   real_is_left_num = is_left_num;
                     is_left_b = Hand[i];
                 }
                 else if(operator>(Hand[i], max)){
                     max = Hand[i];
-                    max_iterator = i;
+                //    max_iterator = i;
                 }
             }
             if(is_left == 1){
@@ -280,19 +281,18 @@ public:
             int counter = 0;
             Card max;
             for(int i = 0; i < Hand.size(); i++){
-                counter += 1;
                 if(Hand[i].get_suit() != trump){
                     Card max = Hand[i];
                     break;
                 }
             }
             for(int i = 0; i < Hand.size(); i++){
-                counter += 1;
                 if((operator>(Hand[i], max)) &&  Hand[i].get_suit()!= trump){
                     max = Hand[i];
+                    counter = i;
                 }
             }
-            // Hand.erase(Hand.begin()+ counter);
+            Hand.erase(Hand.begin()+ counter);
             return max;
             // return play_card(max,trump);
         }
@@ -303,8 +303,8 @@ public:
     //  The card is removed from the player's hand
     Card play_card(const Card &led_card, const std::string &trump){
         Card highest_follow_suit;
-        int counter = 0;
-        int the_counter;
+//int counter = 0;
+        int the_counter = 0;
         bool has_follow_suit = false;
         for(int i = 0; i < Hand.size(); i++){
             if(Hand[i].get_suit() == led_card.get_suit()){
@@ -315,25 +315,25 @@ public:
         }
         if(has_follow_suit == true){
             for(int i = 0; i < Hand.size(); i++){
-                counter +=1;
+            //    counter +=1;
                 if(Hand[i].get_suit() == led_card.get_suit() && operator>(Hand[i],highest_follow_suit)){
                     highest_follow_suit = Hand[i];
-                    the_counter = counter;
+                    the_counter = i;
                 }
             }
-            // Hand.erase(Hand.begin()+ the_counter);
+            Hand.erase(Hand.begin()+ the_counter);
             return highest_follow_suit;
         }
         else{
             Card min = Hand[0];
             for(int i = 0; i < Hand.size(); i++){
-                counter +=1;
+               // counter +=1;
                 if(operator<(Hand[i],min)){
-                    the_counter = counter;
+                    the_counter = i;
                     min = Hand[i];
                 }
             }
-            // Hand.erase(Hand.begin()+ the_counter);
+            Hand.erase(Hand.begin()+ the_counter);
             return min;
         }
     }

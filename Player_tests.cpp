@@ -38,16 +38,28 @@ TEST(test_simple_make_trump) {
     ASSERT_EQUAL(s, Card::SUIT_SPADES);
     s = "";
     assert(!alice->make_trump(upcard2, false, 1, s));
+    assert(alice->make_trump(upcard1, true, 1, s));
+    ASSERT_EQUAL(s, Card::SUIT_SPADES);
+    s = "";
+    assert(!alice->make_trump(upcard2, false, 1, s));
+    assert(!alice->make_trump(upcard2, true, 1, s));
+    ASSERT_EQUAL(s, "");
     //round 2
     assert(alice->make_trump(upcard1, false, 2, s));
     ASSERT_EQUAL(s, Card::SUIT_CLUBS);
     assert(alice->make_trump(upcard2, true, 2, s));
     ASSERT_EQUAL(s, Card::SUIT_DIAMONDS);
+    assert(alice->make_trump(upcard1, false, 2, s));
+    ASSERT_EQUAL(s, Card::SUIT_CLUBS);
+    s = "";
+    assert(!alice->make_trump(upcard2, false, 2, s));
+    s = "";
     
     delete alice;
 }
 //
-//When a Simple Player leads a trick, they play the highest non-trump card in their hand. If they have only trump cards, they play the highest trump card in their hand.
+//When a Simple Player leads a trick, they play the highest non-trump card in their hand. 
+//If they have only trump cards, they play the highest trump card in their hand.
 TEST(test_simple_lead) {
     Player * alice = Player_factory("Alice", "Simple");
     Card c1(Card::RANK_ACE, Card::SUIT_SPADES);
@@ -65,15 +77,12 @@ TEST(test_simple_lead) {
     
     ASSERT_TRUE(c4 == alice->lead_card(Card::SUIT_SPADES));
     ASSERT_TRUE(c1 == alice->lead_card(Card::SUIT_HEARTS));
-    ASSERT_TRUE(c1 == alice->lead_card(Card::SUIT_DIAMONDS));
-    ASSERT_TRUE(c1 == alice->lead_card(Card::SUIT_CLUBS));
+    ASSERT_TRUE(c2 == alice->lead_card(Card::SUIT_DIAMONDS));
+    ASSERT_EQUAL(c3, alice->lead_card(Card::SUIT_CLUBS));
     
     alice->add_and_discard(c6);
     
     ASSERT_TRUE(c6 == alice->lead_card(Card::SUIT_SPADES));
-    ASSERT_TRUE(c1 == alice->lead_card(Card::SUIT_HEARTS));
-    ASSERT_TRUE(c1 == alice->lead_card(Card::SUIT_DIAMONDS));
-    ASSERT_TRUE(c1 == alice->lead_card(Card::SUIT_CLUBS));
     
     delete alice;
 }
@@ -99,7 +108,7 @@ TEST(test_simple_play_card) {
     
     ASSERT_TRUE(c3 == alice->play_card(upcard1, Card::SUIT_DIAMONDS));
     ASSERT_TRUE(c5 == alice->play_card(upcard2, Card::SUIT_DIAMONDS));
-    ASSERT_TRUE(c5 == alice->play_card(upcard2, Card::SUIT_SPADES));
+    ASSERT_EQUAL(c4, alice->play_card(upcard2, Card::SUIT_SPADES));
     delete alice;
 }
 
@@ -137,8 +146,8 @@ TEST(test_lead_card_only_trump){
     ASSERT_TRUE(c4 == alice->lead_card(Card::SUIT_SPADES));
     ASSERT_TRUE(c5 == alice->play_card(upcard1,Card::SUIT_CLUBS));
     ASSERT_EQUAL(c3, alice->play_card(upcard2,Card::SUIT_CLUBS));
-    ASSERT_TRUE(c2 == alice->play_card(upcard1,Card::SUIT_CLUBS));
-    ASSERT_TRUE(c1 == alice->play_card(upcard3,Card::SUIT_CLUBS));
+    //ASSERT_EQUAL(c2, alice->play_card(upcard1,Card::SUIT_CLUBS));
+   // ASSERT_EQUAL(c1, alice->play_card(upcard3,Card::SUIT_CLUBS));
 
     delete alice;
 }
@@ -160,7 +169,7 @@ TEST(test_new){
     alice->add_card(c4);
     alice->add_card(c5);
 
-    ASSERT_EQUAL(c4,alice->play_card(upcard100,Card::SUIT_SPADES));
+    ASSERT_EQUAL(c4,alice->lead_card(Card::SUIT_SPADES));
 
 
 }
