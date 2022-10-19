@@ -20,37 +20,237 @@ using namespace std;
 
 class Game{
     public:
-    Game(bool shuffle_in, int num_turns, Player* p1, Player* p2, Player* p3, Player* p4, Pack pack_in) {
+    Game(bool shuffle_in, int points_to_win, Player* p1, Player* p2, Player* p3, Player* p4, Pack pack_in) {
         
         players.push_back(p1);
         players.push_back(p2);
         players.push_back(p3);
         players.push_back(p4);
         pack = pack_in;
-        shuffle(shuffle_in);
-        turns = num_turns;
+        do_shuffle = shuffle_in;
+        // shuffle(shuffle_in);
+        turns = points_to_win;
     }
-        void play();
+        void play(){
+          shuffle(do_shuffle);
+          deal(players[0],players[1],players[2],players[3],upcard);
+          make_trump(players[0],players[1],players[2],players[3],upcard);
+        }
     
     private:
         std::vector<Player*> players;
         Pack pack;
+        bool do_shuffle;
         int turns;
+        int dealer = 0;
+        Card upcard;
 
 
         //Shuffles deck if do_shuffle is true. Else if do_shuffle is false, it resets
         void shuffle(bool do_shuffle){
           if(do_shuffle){
             pack.shuffle();
+            cout << "is shuffled";
           }
           else{
             pack.reset();
           }
         }
 
-        
-        void deal(/* ... */);
-        void make_trump(/* ... */);
+        //Deals4 players cards in 3232 2323 order. Then turns up the next  card(upcard)
+        void deal(Player* p1, Player* p2, Player* p3, Player* p4, Card &upcard){
+          Card dealt;
+          //p1 is dealer
+          if(dealer % 4 ==  0){
+            //First Deal
+            for(int i = 0; i < 3; i ++){
+              dealt = pack.deal_one();
+              p2->add_card(dealt);
+            }
+            for(int i = 0; i < 2; i ++){
+              dealt = pack.deal_one();
+              p3->add_card(dealt);
+            }
+            for(int i = 0; i < 3; i ++){
+              dealt = pack.deal_one();
+              p4->add_card(dealt);
+            }
+            for(int i = 0; i < 2; i ++){
+              dealt = pack.deal_one();
+              p1->add_card(dealt);
+            }
+            //Second Deal
+            for(int i = 0; i < 2; i ++){
+              dealt = pack.deal_one();
+              p2->add_card(dealt);
+            }
+            for(int i = 0; i < 3; i ++){
+              dealt = pack.deal_one();
+              p3->add_card(dealt);
+            }
+            for(int i = 0; i < 2; i ++){
+              dealt = pack.deal_one();
+              p4->add_card(dealt);
+            }
+            for(int i = 0; i < 3; i ++){
+              dealt = pack.deal_one();
+              p1->add_card(dealt);
+            }
+          }
+          //p2 is dealer
+          else if(dealer % 4 == 1){
+            for(int i = 0; i < 3; i ++){
+              dealt = pack.deal_one();
+              p3->add_card(dealt);
+            }
+            for(int i = 0; i < 2; i ++){
+              dealt = pack.deal_one();
+              p4->add_card(dealt);
+            }
+            for(int i = 0; i < 3; i ++){
+              dealt = pack.deal_one();
+              p1->add_card(dealt);
+            }
+            for(int i = 0; i < 2; i ++){
+              dealt = pack.deal_one();
+              p2->add_card(dealt);
+            }
+            //Second Deal
+            for(int i = 0; i < 2; i ++){
+              dealt = pack.deal_one();
+              p3->add_card(dealt);
+            }
+            for(int i = 0; i < 3; i ++){
+              dealt = pack.deal_one();
+              p4->add_card(dealt);
+            }
+            for(int i = 0; i < 2; i ++){
+              dealt = pack.deal_one();
+              p1->add_card(dealt);
+            }
+            for(int i = 0; i < 3; i ++){
+              dealt = pack.deal_one();
+              p2->add_card(dealt);
+            }
+          }
+
+         //p3 is dealer
+          else if(dealer % 4 == 2){
+            for(int i = 0; i < 3; i ++){
+              dealt = pack.deal_one();
+              p4->add_card(dealt);
+            }
+            for(int i = 0; i < 2; i ++){
+              dealt = pack.deal_one();
+              p1->add_card(dealt);
+            }
+            for(int i = 0; i < 3; i ++){
+              dealt = pack.deal_one();
+              p2->add_card(dealt);
+            }
+            for(int i = 0; i < 2; i ++){
+              dealt = pack.deal_one();
+              p3->add_card(dealt);
+            }
+            //Second Deal
+            for(int i = 0; i < 2; i ++){
+              dealt = pack.deal_one();
+              p4->add_card(dealt);
+            }
+            for(int i = 0; i < 3; i ++){
+              dealt = pack.deal_one();
+              p1->add_card(dealt);
+            }
+            for(int i = 0; i < 2; i ++){
+              dealt = pack.deal_one();
+              p2->add_card(dealt);
+            }
+            for(int i = 0; i < 3; i ++){
+              dealt = pack.deal_one();
+              p3->add_card(dealt);
+            }
+          }
+
+          //p4 is dealer
+          else if(dealer % 3 == 3){
+            for(int i = 0; i < 3; i ++){
+              dealt = pack.deal_one();
+              p1->add_card(dealt);
+            }
+            for(int i = 0; i < 2; i ++){
+              dealt = pack.deal_one();
+              p2->add_card(dealt);
+            }
+            for(int i = 0; i < 3; i ++){
+              dealt = pack.deal_one();
+              p3->add_card(dealt);
+            }
+            for(int i = 0; i < 2; i ++){
+              dealt = pack.deal_one();
+              p4->add_card(dealt);
+            }
+            //Second Deal
+            for(int i = 0; i < 2; i ++){
+              dealt = pack.deal_one();
+              p1->add_card(dealt);
+            }
+            for(int i = 0; i < 3; i ++){
+              dealt = pack.deal_one();
+              p2->add_card(dealt);
+            }
+            for(int i = 0; i < 2; i ++){
+              dealt = pack.deal_one();
+              p3->add_card(dealt);
+            }
+            for(int i = 0; i < 3; i ++){
+              dealt = pack.deal_one();
+              p4->add_card(dealt);
+            }
+          }
+          dealer += 1;
+          dealt = pack.deal_one();
+          upcard = dealt;
+        }
+
+
+
+
+        void make_trump(Player* p1, Player* p2, Player* p3, Player* p4, Card &upcard){
+          bool c1 = false;
+          bool c2 = false;
+          bool c3 = false;
+          bool c4 = false;
+          int round = 1;
+          string s;
+          if(dealer % 4 == 0){
+            c1 = true;
+          }
+          else if(dealer % 4 == 1){
+            c2 = true;
+          }
+          else if(dealer % 4 == 2){
+            c3 = true;
+          }
+          else if(dealer % 4 == 3){
+            c4 = true;
+          }
+          if(p1->make_trump(upcard,c1,round,s)){
+            cout << "sucsess";
+          }
+          else if(p2->make_trump(upcard,c2,round,s)){
+            cout << "sucsess";
+          }
+          else if(p3->make_trump(upcard,c3,round,s)){
+            cout << "sucsess";
+          }
+          else if(p4->make_trump(upcard,c4,round,s)){
+            cout << "sucsess";
+          }
+          else{
+            cout << "Doing round two";
+          }
+        }
+
         void play_hand(/* ... */);
 
 };
@@ -109,29 +309,18 @@ int main(int argc, char **argv) {
     else{
         do_shuffle = false;
     }
-    int turns = atoi(argv[3]);
+    int points_to_win = atoi(argv[3]);
     
     if(!is.is_open()){
       cout << "Error opening " << pack_filename << endl;
     }
-    else{
-//      string is_shuffle;
-//      bool do_shuffle;
-//      is_shuffle = argv[2];
-//      if(is_shuffle == "shuffle"){
-//        do_shuffle = true;
-//      }
-//      else{
-//        do_shuffle = false;
-//      }
-//      cout << do_shuffle;
-        
+
         Player* p1 = Player_factory(argv[4], argv[5]);
         Player* p2 = Player_factory(argv[6], argv[7]);
         Player* p3 = Player_factory(argv[8], argv[9]);
         Player* p4 = Player_factory(argv[10], argv[11]);
         Pack pack_in(is);
-        Game game(do_shuffle,turns, p1, p2, p3, p4, pack_in);
+        Game game(do_shuffle, points_to_win, p1, p2, p3, p4, pack_in);
         game.play();
         return 0;
     }
@@ -139,4 +328,14 @@ int main(int argc, char **argv) {
   // Read command line args and check for errors
 //   Game game(/* game details */);
 //   game.play();
-}
+
+// Euchre.cpp plan
+
+// -Read in all inputs through argv
+// -Initialize players and pack
+// -Make a new game with constructor that has these players, pack, plus shuffle instructions and amount of turns
+
+// -The game class will then run the whole game, with a loop that runs every trick, running for the number of turns provided
+// -the play function will do this and will probably be the bulk of the code
+
+// -We might need a system to track points and declare a winner
