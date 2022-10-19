@@ -20,12 +20,22 @@ using namespace std;
 
 class Game{
     public:
-        Game(/* ... */);
+    Game(bool shuffle_in, int num_turns, Player* p1, Player* p2, Player* p3, Player* p4, Pack pack_in) {
+        
+        players.push_back(p1);
+        players.push_back(p2);
+        players.push_back(p3);
+        players.push_back(p4);
+        pack = pack_in;
+        shuffle(shuffle_in);
+        turns = num_turns;
+    }
         void play();
     
     private:
         std::vector<Player*> players;
         Pack pack;
+        int turns;
 
 
         //Shuffles deck if do_shuffle is true. Else if do_shuffle is false, it resets
@@ -51,8 +61,7 @@ class Game{
 
 
 int main(int argc, char **argv) {
-   ifstream is;
-  // ./euchre.exe pack.in shuffle 10 Edsger Simple Fran Simple Gabriel Simple Herb Simple
+    // ./euchre.exe pack.in shuffle 10 Edsger Simple Fran Simple Gabriel Simple Herb Simple
     // if(argc != 12){
     //   cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
     //   << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
@@ -88,23 +97,43 @@ int main(int argc, char **argv) {
     //   << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
     //   << "NAME4 TYPE4" << endl;
     // }
+    ifstream is;
     is >> *argv[1];
     is.open(argv[1]);
     string pack_filename = argv[1];
+    string shuffle = argv[2];
+    bool do_shuffle;
+    if(shuffle == "shuffle"){
+        do_shuffle = true;
+    }
+    else{
+        do_shuffle = false;
+    }
+    int turns = atoi(argv[3]);
+    
     if(!is.is_open()){
       cout << "Error opening " << pack_filename << endl;
     }
     else{
-      string is_shuffle;
-      bool do_shuffle;
-      is_shuffle = argv[2];
-      if(is_shuffle == "shuffle"){
-        do_shuffle = true;
-      }
-      else{
-        do_shuffle = false;
-      }
-      cout << do_shuffle;
+//      string is_shuffle;
+//      bool do_shuffle;
+//      is_shuffle = argv[2];
+//      if(is_shuffle == "shuffle"){
+//        do_shuffle = true;
+//      }
+//      else{
+//        do_shuffle = false;
+//      }
+//      cout << do_shuffle;
+        
+        Player* p1 = Player_factory(argv[4], argv[5]);
+        Player* p2 = Player_factory(argv[6], argv[7]);
+        Player* p3 = Player_factory(argv[8], argv[9]);
+        Player* p4 = Player_factory(argv[10], argv[11]);
+        Pack pack_in(is);
+        Game game(do_shuffle,turns, p1, p2, p3, p4, pack_in);
+        game.play();
+        return 0;
     }
 
   // Read command line args and check for errors
