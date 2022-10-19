@@ -83,6 +83,12 @@ TEST(test_simple_lead) {
     alice->add_and_discard(c6);
     
     ASSERT_TRUE(c6 == alice->lead_card(Card::SUIT_SPADES));
+<<<<<<< HEAD
+=======
+    ASSERT_TRUE(c4 == alice->lead_card(Card::SUIT_SPADES));
+    ASSERT_EQUAL(c4,alice->lead_card(Card::SUIT_SPADES));
+    ASSERT_EQUAL(c4,alice->lead_card(Card::SUIT_CLUBS));
+>>>>>>> 3409d59e4cf754c51af4658e0c9f930437362def
     
     delete alice;
 }
@@ -145,7 +151,11 @@ TEST(test_lead_card_only_trump){
 
     ASSERT_TRUE(c4 == alice->lead_card(Card::SUIT_SPADES));
     ASSERT_TRUE(c5 == alice->play_card(upcard1,Card::SUIT_CLUBS));
+<<<<<<< HEAD
     ASSERT_EQUAL(c3, alice->play_card(upcard2,Card::SUIT_CLUBS));
+=======
+  //  ASSERT_EQUAL(c3, alice->play_card(upcard2,Card::SUIT_CLUBS));
+>>>>>>> 3409d59e4cf754c51af4658e0c9f930437362def
     //ASSERT_EQUAL(c2, alice->play_card(upcard1,Card::SUIT_CLUBS));
    // ASSERT_EQUAL(c1, alice->play_card(upcard3,Card::SUIT_CLUBS));
 
