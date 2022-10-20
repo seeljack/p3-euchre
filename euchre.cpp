@@ -254,31 +254,44 @@ class Game{
         
           if(p1->make_trump(upcard,c1,round,trump)){
             cout << "sucess";
-              return 0;
           }
         
           else if(p2->make_trump(upcard,c2,round,trump)){
             cout << p1->get_name() << "passes" << endl;
             cout << "sucess";
-              return 1;
           }
         
           else if(p3->make_trump(upcard,c3,round,trump)){
             cout << p2->get_name() << "passes" << endl;
             cout << "sucess";
-              return 2;
           }
         
           else if(p4->make_trump(upcard,c4,round,trump)){
               cout << p3->get_name() << "passes" << endl;
             cout << "sucess";
-              return 3;
           }
           else{
             cout << p4->get_name() << "passes" << endl;
             cout << "Doing round two";
-              return -1;
+            round = 2;
+            if(p1->make_trump(upcard,c1,round,trump)){
+              cout << "sucess";
+            }
+            else if(p2->make_trump(upcard,c2,round,trump)){
+              cout << p1->get_name() << "passes" << endl;
+              cout << "sucess";
+            }
+            else if(p3->make_trump(upcard,c3,round,trump)){
+              cout << p2->get_name() << "passes" << endl;
+              cout << "sucess";
+            }
+            else if(p4->make_trump(upcard,c4,round,trump)){
+              cout << p3->get_name() << "passes" << endl;
+              cout << "sucess";
           }
+          }
+          cout << "\n" << " The suit is " << trump << "\n";
+          return -1;
         }
     //needs to know what trump is, who dealer is, and who made trump
     //needs to award points based on who won the hand, including getting euchered
@@ -295,7 +308,7 @@ class Game{
             trump_team = 2;
         }
         //to the left of dealer leads off
-        trick_winner = play_trick(trump, (dealer + 1) % 4);
+        trick_winner = play_trick(trump, (dealer) % 4);
         cout << players[trick_winner]->get_name() << " takes the trick" << endl;
         
         for (int i = 1; i < 5; i++) {
@@ -329,21 +342,24 @@ class Game{
                 points_t1++;
             }
         }
+        cout << "\n" << "\n" << "\n";
+        cout << "The score of the game is: " << points_t1 << " to " << points_t2 << "\n" << "\n" << "\n";
     }
     //need to know who leads and what the trump is
     //needs to return who won the hand
     int play_trick(string trump, int lead) {
-        Card c1 = players[lead]->lead_card(trump);
+        cout << lead << " djsvnsidjnvojdsnv" << "\n";
+        Card c1 = players[lead % 4]->lead_card(trump);
         cout << c1 << " lead by " << players[lead]->get_name() << endl;
         
-        Card c2 = players[lead + 1]->play_card(c1, trump);
-        cout << c2 << " played by " << players[lead + 1]->get_name() << endl;
+        Card c2 = players[(lead + 1) % 4]->play_card(c1, trump);
+        cout << c2 << " played by " << players[(lead + 1) % 4]->get_name() << endl;
         
-        Card c3 = players[lead + 2]->play_card(c1, trump);
-        cout << c3 << " played by " << players[lead + 2]->get_name() << endl;
+        Card c3 = players[(lead + 2) % 4]->play_card(c1, trump);
+        cout << c3 << " played by " << players[(lead + 2) % 4]->get_name() << endl;
         
-        Card c4 = players[lead + 3]->play_card(c1, trump);
-        cout << c4 << " played by " << players[lead + 3]->get_name() << endl;
+        Card c4 = players[(lead + 3) % 4]->play_card(c1, trump);
+        cout << c4 << " played by " << players[(lead + 3) % 4]->get_name() << endl;
 
         Card winner = trick_winner(c1, c2, c3, c4, trump);
         if (winner == c1) {
@@ -467,3 +483,9 @@ int main(int argc, char **argv) {
 // -the play function will do this and will probably be the bulk of the code
 
 // -We might need a system to track points and declare a winner
+
+
+
+
+
+//./euchre.exe pack.in noshuffle 10 Edsger Simple Fran Simple Gabriel Simple Herb Simple
