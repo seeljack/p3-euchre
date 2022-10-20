@@ -35,11 +35,11 @@ class Game{
     void play(){
         while (points_t1 < points_win && points_t2 < points_win) {
             string trump;
-            int trump_maker;
+            // int trump_maker;
             shuffle(do_shuffle);
             deal(players[0],players[1],players[2],players[3],upcard);
-            trump_maker = make_trump(players[0],players[1],players[2],players[3],upcard,trump);
-            play_round(trump, dealer, trump_maker);
+            // trump_maker = make_trump(players[0],players[1],players[2],players[3],upcard,trump);
+            play_round(trump, dealer);
         }
         if (points_t1 == points_win) {
             cout << players[0]->get_name() << " and " << players[2]->get_name() \
@@ -251,69 +251,216 @@ class Game{
           else if(dealer % 4 == 3){
             c4 = true;
           }
-        
-          if(p1->make_trump(upcard,c1,round,trump)){
-            cout << "sucess";
-          }
-        
-          else if(p2->make_trump(upcard,c2,round,trump)){
-            cout << p1->get_name() << "passes" << endl;
-            cout << "sucess";
-          }
-        
-          else if(p3->make_trump(upcard,c3,round,trump)){
-            cout << p2->get_name() << "passes" << endl;
-            cout << "sucess";
-          }
-        
-          else if(p4->make_trump(upcard,c4,round,trump)){
-              cout << p3->get_name() << "passes" << endl;
-            cout << "sucess";
-          }
-          else{
-            cout << p4->get_name() << "passes" << endl;
-            cout << "Doing round two";
-            round = 2;
+          if(c4 == true){
             if(p1->make_trump(upcard,c1,round,trump)){
-              cout << "sucess";
+              return 1;
             }
+          
             else if(p2->make_trump(upcard,c2,round,trump)){
               cout << p1->get_name() << "passes" << endl;
-              cout << "sucess";
+              return 2;
             }
+          
             else if(p3->make_trump(upcard,c3,round,trump)){
+              cout << p1->get_name() << "passes" << endl;
               cout << p2->get_name() << "passes" << endl;
-              cout << "sucess";
+              return 3;
             }
+          
             else if(p4->make_trump(upcard,c4,round,trump)){
-              cout << p3->get_name() << "passes" << endl;
-              cout << "sucess";
+                cout << p1->get_name() << "passes" << endl;
+                cout << p2->get_name() << "passes" << endl;
+                cout << p3->get_name() << "passes" << endl;
+              return 4;
+            }
+            else{
+              cout << p1->get_name() << " passes" << endl;
+              cout << p2->get_name() << " passes" << endl;
+              cout << p3->get_name() << " passes" << endl;
+              cout << p4->get_name() << " passes" << endl;
+              round = 2;
+              if(p1->make_trump(upcard,c1,round,trump)){
+                return 1;
+              }
+              else if(p2->make_trump(upcard,c2,round,trump)){
+                cout << p1->get_name() << "passes" << endl;
+                return 2;
+              }
+              else if(p3->make_trump(upcard,c3,round,trump)){
+                cout << p2->get_name() << "passes" << endl;
+                return 3;
+              }
+              else if(p4->make_trump(upcard,c4,round,trump)){
+                cout << p3->get_name() << "passes" << endl;
+                return 4;
+            }
+            }
           }
+          if(c1 == true){
+            if(p2->make_trump(upcard,c1,round,trump)){
+              return 1;
+            }
+          
+            else if(p3->make_trump(upcard,c2,round,trump)){
+              cout << p2->get_name() << "passes" << endl;
+              return 2;
+            }
+          
+            else if(p4->make_trump(upcard,c3,round,trump)){
+              cout << p2->get_name() << "passes" << endl;
+              cout << p3->get_name() << "passes" << endl;
+              return 3;
+            }
+          
+            else if(p1->make_trump(upcard,c4,round,trump)){
+                cout << p2->get_name() << "passes" << endl;
+                cout << p3->get_name() << "passes" << endl;
+                cout << p4->get_name() << "passes" << endl;
+              return 4;
+            }
+            else{
+              cout << p2->get_name() << " passes" << endl;
+              cout << p3->get_name() << " passes" << endl;
+              cout << p4->get_name() << " passes" << endl;
+              cout << p1->get_name() << " passes" << endl;
+              round = 2;
+              if(p2->make_trump(upcard,c1,round,trump)){
+                return 2;
+              }
+              else if(p3->make_trump(upcard,c2,round,trump)){
+                cout << p2->get_name() << "passes" << endl;
+                return 3;
+              }
+              else if(p4->make_trump(upcard,c3,round,trump)){
+                cout << p3->get_name() << "passes" << endl;
+                return 4;
+              }
+              else if(p1->make_trump(upcard,c4,round,trump)){
+                cout << p4->get_name() << "passes" << endl;
+                return 1;
+            }
+            }
+          }
+          if(c2 == true){
+            if(p3->make_trump(upcard,c1,round,trump)){
+              return 3;
+            }
+          
+            else if(p4->make_trump(upcard,c2,round,trump)){
+              cout << p3->get_name() << "passes" << endl;
+              return 4;
+            }
+          
+            else if(p1->make_trump(upcard,c3,round,trump)){
+              cout << p3->get_name() << "passes" << endl;
+              cout << p4->get_name() << "passes" << endl;
+              return 1;
+            }
+          
+            else if(p2->make_trump(upcard,c4,round,trump)){
+                cout << p3->get_name() << "passes" << endl;
+                cout << p4->get_name() << "passes" << endl;
+                cout << p1->get_name() << "passes" << endl;
+              return 2;
+            }
+            else{
+              cout << p3->get_name() << " passes" << endl;
+              cout << p4->get_name() << " passes" << endl;
+              cout << p1->get_name() << " passes" << endl;
+              cout << p2->get_name() << " passes" << endl;
+              round = 2;
+              if(p3->make_trump(upcard,c1,round,trump)){
+                return 3;
+              }
+              else if(p4->make_trump(upcard,c2,round,trump)){
+                cout << p3->get_name() << "passes" << endl;
+                return 4;
+              }
+              else if(p1->make_trump(upcard,c3,round,trump)){
+                cout << p4->get_name() << "passes" << endl;
+                return 1;
+              }
+              else if(p2->make_trump(upcard,c4,round,trump)){
+                cout << p1->get_name() << "passes" << endl;
+                return 2;
+            }
+            }
+          }
+          if(c3 == true){
+            if(p4->make_trump(upcard,c1,round,trump)){
+              return 4;
+            }
+          
+            else if(p1->make_trump(upcard,c2,round,trump)){
+              cout << p4->get_name() << "passes" << endl;
+              return 1;
+            }
+          
+            else if(p2->make_trump(upcard,c3,round,trump)){
+              cout << p4->get_name() << "passes" << endl;
+              cout << p1->get_name() << "passes" << endl;
+              return 2;
+            }
+          
+            else if(p3->make_trump(upcard,c4,round,trump)){
+                cout << p4->get_name() << "passes" << endl;
+                cout << p1->get_name() << "passes" << endl;
+                cout << p2->get_name() << "passes" << endl;
+              return 3;
+            }
+            else{
+              cout << p4->get_name() << " passes" << endl;
+              cout << p1->get_name() << " passes" << endl;
+              cout << p2->get_name() << " passes" << endl;
+              cout << p3->get_name() << " passes" << endl;
+              round = 2;
+              if(p4->make_trump(upcard,c1,round,trump)){
+                return 4;
+              }
+              else if(p1->make_trump(upcard,c2,round,trump)){
+                cout << p4->get_name() << "passes" << endl;
+                return 1;
+              }
+              else if(p2->make_trump(upcard,c3,round,trump)){
+                cout << p1->get_name() << "passes" << endl;
+                return 2;
+              }
+              else if(p3->make_trump(upcard,c4,round,trump)){
+                cout << p2->get_name() << "passes" << endl;
+                return 3;
+            }
+            }
           }
           cout << "\n" << " The suit is " << trump << "\n";
           return -1;
         }
     //needs to know what trump is, who dealer is, and who made trump
     //needs to award points based on who won the hand, including getting euchered
-    void play_round(string trump, int dealer, int trump_maker) {
+    void play_round(string trump, int dealer) {
         int trick_winner; //trick winner, they will lead the next hand
         int tricks_won_t1 = 0; //tracks tricks won to award points
         int tricks_won_t2 = 0;
         int trump_team = 0; //the team who made trump, in case they get euchered
-        
+      
+        int hand = 0;
+        cout << "HAND " << hand << "\n";
+        hand += 1;
+        cout << players[(dealer - 1) % 4]->get_name() << " deals" << "\n";
+        int trump_maker = make_trump(players[0],players[1],players[2],players[3],upcard,trump);
         if (trump_maker % 4 == 0 || trump_maker % 4 == 2) {
             trump_team = 1;
         }
         else if (trump_maker % 4 == 1 || trump_maker % 4 == 3) {
             trump_team = 2;
         }
+
+        cout << players[trump_maker - 1]->get_name() << " orderes up " << trump << "\n" << "\n";
         //to the left of dealer leads off
         trick_winner = play_trick(trump, (dealer) % 4);
-        cout << players[trick_winner]->get_name() << " takes the trick" << endl;
-        
+        cout << players[trick_winner]->get_name() << " takes the trick" << endl << endl;
         for (int i = 1; i < 5; i++) {
             trick_winner = play_trick(trump, trick_winner);
-            cout << players[trick_winner]->get_name() << " takes the trick" << endl;
+            cout << players[trick_winner]->get_name() << " takes the trick" << endl << endl;
             if (trick_winner == 1 || trick_winner == 3) {
                 tricks_won_t1++;
             }
