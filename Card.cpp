@@ -249,33 +249,76 @@ bool Card_less(const Card &a, const Card &b, const std::string &trump){
     if (a == b) {
         return false;
     }
-    else if(!a.is_trump(trump) && !b.is_trump(trump)) { //both not trump
-        return a < b;
-    }
-    else if (!a.is_trump(trump)) { //if a is not trump, b must be
+    //b is trump, a is not
+    else if((b.is_trump(trump)) && (!a.is_trump(trump))){
         return true;
     }
-    else if (!b.is_trump(trump)) { //if b is not, a must be
+    //a is trump, b is not
+    else if((a.is_trump(trump)) && (!b.is_trump(trump))){
         return false;
     }
-    else {
-        if (a.is_right_bower(trump)) {
-            return false;
+    //both a and b are not trump
+    else if(!a.is_trump(trump) && !b.is_trump(trump)){
+        //When the cards have the same rank
+        if(a.get_rank() == b.get_rank()){
+            if(a.get_suit() == Card::SUIT_DIAMONDS){
+                return false;
+            }
+            else if(b.get_suit() == Card::SUIT_DIAMONDS){
+                return true;
+            }
+            else if(a.get_suit() == Card::SUIT_CLUBS){
+                return false;
+            }
+            else if(b.get_suit() == Card::SUIT_CLUBS){
+                return true;
+            }
+            else if(a.get_suit() == Card::SUIT_HEARTS){
+                return false;
+            }
+            else if(a.get_suit() == Card::SUIT_HEARTS){
+                return true;
+            }
         }
-        else if(b.is_right_bower(trump)) {
-            return true;
-        }
-        else if (a.is_left_bower(trump)) {
-            return false;
-        }
-        else if (b.is_left_bower(trump)) {
-            return true;
-        }
-        else {
-            return a < b;
-        }
+        return a < b;
     }
+    //Still need to do if both are trump
+    return a < b;
 }
+
+
+
+
+
+
+
+    // else if(!a.is_trump(trump) && !b.is_trump(trump)) { //both not trump
+    //     bool x = a < b;
+    //     return a < b;
+    // }
+    // else if (!a.is_trump(trump)) { //if a is not trump, b must be
+    //     return true;
+    // }
+    // else if (!b.is_trump(trump)) { //if b is not, a must be
+    //     return false;
+    // }
+    // else {
+    //     if (a.is_right_bower(trump)) {
+    //         return false;
+    //     }
+    //     else if(b.is_right_bower(trump)) {
+    //         return true;
+    //     }
+    //     else if (a.is_left_bower(trump)) {
+    //         return false;
+    //     }
+    //     else if (b.is_left_bower(trump)) {
+    //         return true;
+    //     }
+    //     else {
+    //         return a < b;
+    //     }
+    // }
 
 //REQUIRES trump is a valid suit
 //EFFECTS Returns true if a is lower value than b.  Uses both the trump suit

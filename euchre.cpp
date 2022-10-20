@@ -192,7 +192,7 @@ class Game{
           }
 
           //p4 is dealer
-          else if(dealer % 3 == 3){
+          else if(dealer % 4 == 3){
             for(int i = 0; i < 3; i ++){
               dealt = pack.deal_one();
               p1->add_card(dealt);
@@ -342,13 +342,12 @@ class Game{
                 points_t1++;
             }
         }
-        cout << "\n" << "\n" << "\n";
-        cout << "The score of the game is: " << points_t1 << " to " << points_t2 << "\n" << "\n" << "\n";
+        cout << "\n" ;
+        cout << players[0]->get_name() << " and " << players[2]->get_name() << " have "<< points_t1 << "\n" << players[1]->get_name() << " and " << players[3]->get_name() << " have " << points_t2 << "\n";
     }
     //need to know who leads and what the trump is
     //needs to return who won the hand
     int play_trick(string trump, int lead) {
-        cout << lead << " djsvnsidjnvojdsnv" << "\n";
         Card c1 = players[lead % 4]->lead_card(trump);
         cout << c1 << " lead by " << players[lead]->get_name() << endl;
         
@@ -377,13 +376,13 @@ class Game{
     }
     
     Card trick_winner(Card c1, Card c2, Card c3, Card c4, string trump) {
-        if (Card_less(c1, c2, trump) && Card_less(c1, c3, trump) && Card_less(c1, c4, trump)) {
+        if (!Card_less(c1, c2, trump) && !Card_less(c1, c3, trump) && !Card_less(c1, c4, trump)) {
             return c1;
         }
-        else if (Card_less(c2, c1, trump) && Card_less(c2, c3, trump) && Card_less(c2, c4, trump)) {
+        else if (!Card_less(c2, c1, trump) && !Card_less(c2, c3, trump) && !Card_less(c2, c4, trump)) {
             return c2;
         }
-        else if (Card_less(c3, c1, trump) && Card_less(c3, c2, trump) && Card_less(c3, c4, trump)) {
+        else if (!Card_less(c3, c1, trump) && !Card_less(c3, c2, trump) && !Card_less(c3, c4, trump)) {
             return c3;
         }
         else {
