@@ -29,19 +29,39 @@ class Game{
         pack = pack_in;
         do_shuffle = shuffle_in;
         // shuffle(shuffle_in);
-        turns = points_to_win;
+        points_win = points_to_win;
     }
-        void play(){
-          shuffle(do_shuffle);
-          deal(players[0],players[1],players[2],players[3],upcard);
-          make_trump(players[0],players[1],players[2],players[3],upcard);
+    
+    void play(){
+        while (points_t1 < points_win && points_t2 < points_win) {
+            string trump;
+            int trump_maker;
+            shuffle(do_shuffle);
+            deal(players[0],players[1],players[2],players[3],upcard);
+            trump_maker = make_trump(players[0],players[1],players[2],players[3],upcard,trump);
+            play_round(trump, dealer, trump_maker);
         }
+        if (points_t1 == points_win) {
+            cout << players[0]->get_name() << " and " << players[2]->get_name() \
+            << " win!" << endl;
+            return;
+        }
+        else {
+            cout << players[1]->get_name() << " and " << players[3]->get_name() \
+            << " win!" << endl;
+            return;
+        }
+    }
+    ~Game() {}
     
     private:
         std::vector<Player*> players;
         Pack pack;
         bool do_shuffle;
-        int turns;
+        int points_win;
+    //team's game points
+        int points_t1 = 0;
+        int points_t2 = 0;
         int dealer = 0;
         Card upcard;
 
@@ -212,16 +232,13 @@ class Game{
           upcard = dealt;
         }
 
-
-
-
-        void make_trump(Player* p1, Player* p2, Player* p3, Player* p4, Card &upcard){
+    int make_trump(Player* p1, Player* p2, Player* p3, Player* p4, Card &upcard, string& trump){
           bool c1 = false;
           bool c2 = false;
           bool c3 = false;
           bool c4 = false;
           int round = 1;
-          string s;
+       //   string s;
           if(dealer % 4 == 0){
             c1 = true;
           }
@@ -234,25 +251,129 @@ class Game{
           else if(dealer % 4 == 3){
             c4 = true;
           }
-          if(p1->make_trump(upcard,c1,round,s)){
-            cout << "sucsess";
+        
+          if(p1->make_trump(upcard,c1,round,trump)){
+            cout << "sucess";
+              return 0;
           }
-          else if(p2->make_trump(upcard,c2,round,s)){
-            cout << "sucsess";
+        
+          else if(p2->make_trump(upcard,c2,round,trump)){
+            cout << p1->get_name() << "passes" << endl;
+            cout << "sucess";
+              return 1;
           }
-          else if(p3->make_trump(upcard,c3,round,s)){
-            cout << "sucsess";
+        
+          else if(p3->make_trump(upcard,c3,round,trump)){
+            cout << p2->get_name() << "passes" << endl;
+            cout << "sucess";
+              return 2;
           }
-          else if(p4->make_trump(upcard,c4,round,s)){
-            cout << "sucsess";
+        
+          else if(p4->make_trump(upcard,c4,round,trump)){
+              cout << p3->get_name() << "passes" << endl;
+            cout << "sucess";
+              return 3;
           }
           else{
+            cout << p4->get_name() << "passes" << endl;
             cout << "Doing round two";
+              return -1;
           }
         }
+    //needs to know what trump is, who dealer is, and who made trump
+    //needs to award points based on who won the hand, including getting euchered
+    void play_round(string trump, int dealer, int trump_maker) {
+        int trick_winner; //trick winner, they will lead the next hand
+        int tricks_won_t1 = 0; //tracks tricks won to award points
+        int tricks_won_t2 = 0;
+        int trump_team = 0; //the team who made trump, in case they get euchered
+        
+        if (trump_maker % 4 == 0 || trump_maker % 4 == 2) {
+            trump_team = 1;
+        }
+        else if (trump_maker % 4 == 1 || trump_maker % 4 == 3) {
+            trump_team = 2;
+        }
+        //to the left of dealer leads off
+        trick_winner = play_trick(trump, (dealer + 1) % 4);
+        cout << players[trick_winner]->get_name() << " takes the trick" << endl;
+        
+        for (int i = 1; i < 5; i++) {
+            trick_winner = play_trick(trump, trick_winner);
+            cout << players[trick_winner]->get_name() << " takes the trick" << endl;
+            if (trick_winner == 1 || trick_winner == 3) {
+                tricks_won_t1++;
+            }
+            else if (trick_winner == 2 || trick_winner == 4) {
+                tricks_won_t2++;
+            }
+        }
+        
+        if (tricks_won_t1 > tricks_won_t2) {
+            cout << players[0]->get_name() << " and " << players[2]->get_name() \
+            << " win the hand" << endl;
+            if (trump_team == 2) { //for euchre
+                points_t1 += 2;
+                cout << "euchred!" << endl;
+            }
+            else {
+                points_t1++;
+            }
+        }
+        else{
+            if (trump_team == 1) {  //for euchre
+                points_t2 += 2;
+                cout << "euchred!" << endl;
+            }
+            else {
+                points_t1++;
+            }
+        }
+    }
+    //need to know who leads and what the trump is
+    //needs to return who won the hand
+    int play_trick(string trump, int lead) {
+        Card c1 = players[lead]->lead_card(trump);
+        cout << c1 << " lead by " << players[lead]->get_name() << endl;
+        
+        Card c2 = players[lead + 1]->play_card(c1, trump);
+        cout << c2 << " played by " << players[lead + 1]->get_name() << endl;
+        
+        Card c3 = players[lead + 2]->play_card(c1, trump);
+        cout << c3 << " played by " << players[lead + 2]->get_name() << endl;
+        
+        Card c4 = players[lead + 3]->play_card(c1, trump);
+        cout << c4 << " played by " << players[lead + 3]->get_name() << endl;
 
-        void play_hand(/* ... */);
-
+        Card winner = trick_winner(c1, c2, c3, c4, trump);
+        if (winner == c1) {
+            return lead;
+        }
+        else if (winner == c2) {
+            return (lead + 1) % 4;
+        }
+        else if (winner == c3) {
+            return (lead + 2) % 4 ;
+        }
+        else {
+            return (lead + 3) % 4;
+        }
+    }
+    
+    Card trick_winner(Card c1, Card c2, Card c3, Card c4, string trump) {
+        if (Card_less(c1, c2, trump) && Card_less(c1, c3, trump) && Card_less(c1, c4, trump)) {
+            return c1;
+        }
+        else if (Card_less(c2, c1, trump) && Card_less(c2, c3, trump) && Card_less(c2, c4, trump)) {
+            return c2;
+        }
+        else if (Card_less(c3, c1, trump) && Card_less(c3, c2, trump) && Card_less(c3, c4, trump)) {
+            return c3;
+        }
+        else {
+            return c4;
+        }
+    }
 };
 
 
@@ -315,15 +436,22 @@ int main(int argc, char **argv) {
       cout << "Error opening " << pack_filename << endl;
     }
 
-        Player* p1 = Player_factory(argv[4], argv[5]);
-        Player* p2 = Player_factory(argv[6], argv[7]);
-        Player* p3 = Player_factory(argv[8], argv[9]);
-        Player* p4 = Player_factory(argv[10], argv[11]);
-        Pack pack_in(is);
-        Game game(do_shuffle, points_to_win, p1, p2, p3, p4, pack_in);
-        game.play();
-        return 0;
-    }
+    Player* p1 = Player_factory(argv[4], argv[5]);
+    Player* p2 = Player_factory(argv[6], argv[7]);
+    Player* p3 = Player_factory(argv[8], argv[9]);
+    Player* p4 = Player_factory(argv[10], argv[11]);
+    Pack pack_in(is);
+    
+    Game* game = new Game(do_shuffle, points_to_win, p1, p2, p3, p4, pack_in);
+    game->play();
+    
+    delete p1;
+    delete p2;
+    delete p3;
+    delete p4;
+    delete game;
+    return 0;
+}
 
   // Read command line args and check for errors
 //   Game game(/* game details */);

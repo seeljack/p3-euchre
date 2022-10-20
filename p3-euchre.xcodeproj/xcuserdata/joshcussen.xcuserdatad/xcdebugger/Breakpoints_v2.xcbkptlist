@@ -222,10 +222,10 @@
             filePath = "euchre.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "main(argc, argv)"
-            landmarkType = "9">
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "deal(p1, p2, p3, p4, upcard)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -238,10 +238,10 @@
             filePath = "euchre.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
-            landmarkName = "main(argc, argv)"
-            landmarkType = "9">
+            startingLineNumber = "132"
+            endingLineNumber = "132"
+            landmarkName = "deal(p1, p2, p3, p4, upcard)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
