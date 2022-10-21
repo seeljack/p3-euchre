@@ -62,7 +62,8 @@ class Game{
     //team's game points
         int points_t1 = 0;
         int points_t2 = 0;
-        int dealer = 0;
+    int dealer = 0;
+    int hand = 0;
         Card upcard;
 
 
@@ -70,7 +71,7 @@ class Game{
         void shuffle(bool do_shuffle){
           if(do_shuffle){
             pack.shuffle();
-            cout << "is shuffled";
+           // cout << "is shuffled";
           }
           else{
             pack.reset();
@@ -443,7 +444,6 @@ class Game{
         int tricks_won_t2 = 0;
         int trump_team = 0; //the team who made trump, in case they get euchered
       
-        int hand = 0;
         cout << "Hand " << hand << "\n";
         hand += 1;
         cout << players[(dealer - 1) % 4]->get_name() << " deals" << "\n";
@@ -455,7 +455,7 @@ class Game{
             trump_team = 2;
         }
 
-        cout << players[trump_maker - 1]->get_name() << " orderes up " << trump << "\n" << "\n";
+        cout << players[trump_maker - 1]->get_name() << " orders up " << trump << "\n" << "\n";
         //to the left of dealer leads off
         trick_winner = play_trick(trump, (dealer) % 4);
         cout << players[trick_winner]->get_name() << " takes the trick" << endl << endl;
@@ -490,14 +490,14 @@ class Game{
                 points_t1++;
             }
         }
+        cout << players[0]->get_name() << " and " << players[2]->get_name() << " have "<< points_t1 << " points\n" << players[1]->get_name() << " and " << players[3]->get_name() << " have " << points_t2 << " points\n";
         cout << "\n" ;
-        cout << players[0]->get_name() << " and " << players[2]->get_name() << " have "<< points_t1 << "\n" << players[1]->get_name() << " and " << players[3]->get_name() << " have " << points_t2 << "\n";
     }
     //need to know who leads and what the trump is
     //needs to return who won the hand
     int play_trick(string trump, int lead) {
         Card c1 = players[lead % 4]->lead_card(trump);
-        cout << c1 << " lead by " << players[lead]->get_name() << endl;
+        cout << c1 << " led by " << players[lead]->get_name() << endl;
         
         Card c2 = players[(lead + 1) % 4]->play_card(c1, trump);
         cout << c2 << " played by " << players[(lead + 1) % 4]->get_name() << endl;
