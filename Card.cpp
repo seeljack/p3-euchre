@@ -282,7 +282,18 @@ bool Card_less(const Card &a, const Card &b, const std::string &trump){
         }
         return a < b;
     }
-    //Still need to do if both are trump
+     //Still need to do if both are trump
+    else if(a.is_trump(trump) && b.is_trump(trump)){
+        if(a.get_rank() == Card::RANK_JACK){
+            return false;
+        }
+        else if(b.get_rank() == Card::RANK_JACK){
+            return true;
+        }
+        else{
+            return a < b;
+        }
+    }
     return a < b;
 }
 

@@ -316,7 +316,7 @@ public:
         if(has_follow_suit == true){
             for(int i = 0; i < Hand.size(); i++){
             //    counter +=1;
-                if(Hand[i].get_suit() == led_card.get_suit() && operator>(Hand[i],highest_follow_suit)){
+                if(Hand[i].get_suit() == led_card.get_suit() && operator>=(Hand[i],highest_follow_suit)){
                     highest_follow_suit = Hand[i];
                     the_counter = i;
                 }
@@ -328,7 +328,7 @@ public:
             Card min = Hand[0];
             for(int i = 0; i < Hand.size(); i++){
                // counter +=1;
-                if(operator<(Hand[i],min)){
+                if(Card_less(Hand[i],min,trump)){
                     the_counter = i;
                     min = Hand[i];
                 }

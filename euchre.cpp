@@ -240,17 +240,18 @@ class Game{
           int round = 1;
        //   string s;
           if(dealer % 4 == 0){
-            c1 = true;
-          }
-          else if(dealer % 4 == 1){
-            c2 = true;
-          }
-          else if(dealer % 4 == 2){
-            c3 = true;
-          }
-          else if(dealer % 4 == 3){
             c4 = true;
           }
+          else if(dealer % 4 == 1){
+            c1 = true;
+          }
+          else if(dealer % 4 == 2){
+            c2 = true;
+          }
+          else if(dealer % 4 == 3){
+            c3 = true;
+          }
+          cout << upcard.get_rank() << " of " << upcard.get_suit() << " turned up" << "\n";
           if(c4 == true){
             if(p1->make_trump(upcard,c1,round,trump)){
               return 1;
@@ -443,7 +444,7 @@ class Game{
         int trump_team = 0; //the team who made trump, in case they get euchered
       
         int hand = 0;
-        cout << "HAND " << hand << "\n";
+        cout << "Hand " << hand << "\n";
         hand += 1;
         cout << players[(dealer - 1) % 4]->get_name() << " deals" << "\n";
         int trump_maker = make_trump(players[0],players[1],players[2],players[3],upcard,trump);
@@ -523,20 +524,138 @@ class Game{
     }
     
     Card trick_winner(Card c1, Card c2, Card c3, Card c4, string trump) {
-        if (!Card_less(c1, c2, trump) && !Card_less(c1, c3, trump) && !Card_less(c1, c4, trump)) {
-            return c1;
-        }
-        else if (!Card_less(c2, c1, trump) && !Card_less(c2, c3, trump) && !Card_less(c2, c4, trump)) {
+        if(c1.is_trump(trump) || c2.is_trump(trump) || c3.is_trump(trump) || c4.is_trump(trump)){
+          if (!Card_less(c1, c2, trump) && !Card_less(c1, c3, trump) && !Card_less(c1, c4, trump)) {
+              return c1;
+          }
+          else if (!Card_less(c2, c1, trump) && !Card_less(c2, c3, trump) && !Card_less(c2, c4, trump)) {
             return c2;
         }
-        else if (!Card_less(c3, c1, trump) && !Card_less(c3, c2, trump) && !Card_less(c3, c4, trump)) {
+          else if (!Card_less(c3, c1, trump) && !Card_less(c3, c2, trump) && !Card_less(c3, c4, trump)) {
             return c3;
         }
-        else {
+        
+          else if (!Card_less(c3, c1, trump) && !Card_less(c3, c2, trump) && !Card_less(c3, c4, trump)) {
+            return c3;
+        }
+          else {
             return c4;
         }
     }
-};
+        else{
+          string the_suit = c1.get_suit();
+          if((c2.get_suit() != the_suit) && (c3.get_suit() != the_suit) && (c4.get_suit() != the_suit)){
+              return c1;
+          }
+          else if((c2.get_suit() == the_suit) && (c3.get_suit() != the_suit) && (c4.get_suit() != the_suit)){
+            if(operator>(c2,c1)){
+              return c2;
+            }
+            else{
+              return c1;
+            }
+          }
+          else if((c2.get_suit() != the_suit) && (c3.get_suit() == the_suit) && (c4.get_suit() != the_suit)){
+            if(operator>(c3,c1)){
+              return c3;
+            }
+            else{
+              return c1;
+            }
+          }
+          else if((c2.get_suit() != the_suit) && (c3.get_suit() != the_suit) && (c4.get_suit() == the_suit)){
+            if(operator>(c4,c1)){
+              return c4;
+            }
+            else{
+              return c1;
+            }
+          } 
+          else if((c2.get_suit() != the_suit) && (c3.get_suit() == the_suit) && (c4.get_suit() == the_suit)){
+            if(operator>(c3,c4)){
+              if(operator>(c3,c1)){
+                return c3;
+              }
+              else{
+                return c1;
+              }
+            }
+            else{
+              if(operator>(c4,c1)){
+                return c4;
+              }
+              else{
+                return c1;
+              }
+            }
+        }
+          else if((c2.get_suit() == the_suit) && (c3.get_suit() != the_suit) && (c4.get_suit() == the_suit)){
+            if(operator>(c2,c4)){
+              if(operator>(c2,c1)){
+                return c2;
+              }
+              else{
+                return c1;
+              }
+            }
+            else{
+              if(operator>(c4,c1)){
+                return c4;
+              }
+              else{
+                return c1;
+              }
+            }
+        }
+          else if((c2.get_suit() == the_suit) && (c3.get_suit() == the_suit) && (c4.get_suit() != the_suit)){
+            if(operator>(c3,c2)){
+              if(operator>(c3,c1)){
+                return c3;
+              }
+              else{
+                return c1;
+              }
+            }
+            else{
+              if(operator>(c2,c1)){
+                return c2;
+              }
+              else{
+                return c1;
+              }
+            }
+        }
+        else if((c2.get_suit() == the_suit) && (c3.get_suit() == the_suit) && (c4.get_suit() == the_suit)){
+            if(operator>(c3,c2) && operator>(c3,c4)){
+              if(operator>(c3,c1)){
+                return c3;
+              }
+              else{
+                return c1;
+              }
+            }
+            else if(operator>(c2,c3) && operator>(c2,c4)){
+              if(operator>(c2,c1)){
+                return c2;
+              }
+              else{
+                return c1;
+              }
+            }
+            else if(operator>(c4,c2) && operator>(c4,c3)){
+              if(operator>(c4,c1)){
+                return c4;
+              }
+              else{
+                return c1;
+              }
+            }
+        }
+      }
+      return c1;
+    }
+  };
+  
 
 
 
@@ -597,7 +716,10 @@ int main(int argc, char **argv) {
     if(!is.is_open()){
       cout << "Error opening " << pack_filename << endl;
     }
-
+    for(int i = 0; i < argc; i++){
+      cout << argv[i] << " ";
+    }
+    cout << "\n";
     Player* p1 = Player_factory(argv[4], argv[5]);
     Player* p2 = Player_factory(argv[6], argv[7]);
     Player* p3 = Player_factory(argv[8], argv[9]);
