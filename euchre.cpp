@@ -20,7 +20,8 @@ using namespace std;
 
 class Game{
     public:
-    Game(bool shuffle_in, int points_to_win, Player* p1, Player* p2, Player* p3, Player* p4, Pack pack_in) {
+    Game(bool shuffle_in, int points_to_win, Player* p1,\
+         Player* p2, Player* p3, Player* p4, Pack pack_in) {
         
         players.push_back(p1);
         players.push_back(p2);
@@ -38,10 +39,12 @@ class Game{
             // int trump_maker;
             shuffle(do_shuffle);
             deal(players[0],players[1],players[2],players[3],upcard);
-            // trump_maker = make_trump(players[0],players[1],players[2],players[3],upcard,trump);
+            // trump_maker = make_trump(players[0],players[1],
+            //players[2],players[3],upcard,trump);
             play_round(trump, dealer);
+            dealer += 1;
         }
-        if (points_t1 == points_win) {
+        if (points_t1 >= points_win) {
             cout << players[0]->get_name() << " and " << players[2]->get_name() \
             << " win!" << endl;
             return;
@@ -81,6 +84,44 @@ class Game{
         //Deals4 players cards in 3232 2323 order. Then turns up the next  card(upcard)
         void deal(Player* p1, Player* p2, Player* p3, Player* p4, Card &upcard){
           Card dealt;
+//            int the_dealer = dealer % 4;
+//            //p1 is dealer
+//           // if(dealer % 4 ==  0){
+//              //First Deal
+//              for(int i = 0; i < 3; i ++){
+//                dealt = pack.deal_one();
+//                players[(dealer % 4) + 1]->add_card(dealt);
+//              }
+//              for(int i = 0; i < 2; i ++){
+//                dealt = pack.deal_one();
+//                players[(dealer % 4) + 2]add_card(dealt);
+//              }
+//              for(int i = 0; i < 3; i ++){
+//                dealt = pack.deal_one();
+//                players[(dealer % 4) + 3]->add_card(dealt);
+//              }
+//              for(int i = 0; i < 2; i ++){
+//                dealt = pack.deal_one();
+//                p1->add_card(dealt);
+//              }
+//              //Second Deal
+//              for(int i = 0; i < 2; i ++){
+//                dealt = pack.deal_one();
+//                p2->add_card(dealt);
+//              }
+//              for(int i = 0; i < 3; i ++){
+//                dealt = pack.deal_one();
+//                p3->add_card(dealt);
+//              }
+//              for(int i = 0; i < 2; i ++){
+//                dealt = pack.deal_one();
+//                p4->add_card(dealt);
+//              }
+//              for(int i = 0; i < 3; i ++){
+//                dealt = pack.deal_one();
+//                p1->add_card(dealt);
+//              }
+//            }
           //p1 is dealer
           if(dealer % 4 ==  0){
             //First Deal
@@ -228,12 +269,12 @@ class Game{
               p4->add_card(dealt);
             }
           }
-          dealer += 1;
           dealt = pack.deal_one();
           upcard = dealt;
         }
 
-    int make_trump(Player* p1, Player* p2, Player* p3, Player* p4, Card &upcard, string& trump){
+    int make_trump(Player* p1, Player* p2, Player* p3, \
+                   Player* p4, Card &upcard, string& trump){
           bool c1 = false;
           bool c2 = false;
           bool c3 = false;
@@ -241,38 +282,39 @@ class Game{
           int round = 1;
        //   string s;
           if(dealer % 4 == 0){
-            c4 = true;
-          }
-          else if(dealer % 4 == 1){
             c1 = true;
           }
-          else if(dealer % 4 == 2){
+          else if(dealer % 4 == 1){
             c2 = true;
           }
-          else if(dealer % 4 == 3){
+          else if(dealer % 4 == 2){
             c3 = true;
           }
-          cout << upcard.get_rank() << " of " << upcard.get_suit() << " turned up" << "\n";
+          else if(dealer % 4 == 3){
+            c4 = true;
+          }
+          cout << upcard.get_rank() << " of " << upcard.get_suit()\
+        << " turned up" << "\n";
           if(c4 == true){
             if(p1->make_trump(upcard,c1,round,trump)){
               return 1;
             }
           
             else if(p2->make_trump(upcard,c2,round,trump)){
-              cout << p1->get_name() << "passes" << endl;
+              cout << p1->get_name() << " passes" << endl;
               return 2;
             }
           
             else if(p3->make_trump(upcard,c3,round,trump)){
-              cout << p1->get_name() << "passes" << endl;
-              cout << p2->get_name() << "passes" << endl;
+              cout << p1->get_name() << " passes" << endl;
+              cout << p2->get_name() << " passes" << endl;
               return 3;
             }
           
             else if(p4->make_trump(upcard,c4,round,trump)){
-                cout << p1->get_name() << "passes" << endl;
-                cout << p2->get_name() << "passes" << endl;
-                cout << p3->get_name() << "passes" << endl;
+                cout << p1->get_name() << " passes" << endl;
+                cout << p2->get_name() << " passes" << endl;
+                cout << p3->get_name() << " passes" << endl;
               return 4;
             }
             else{
@@ -285,40 +327,40 @@ class Game{
                 return 1;
               }
               else if(p2->make_trump(upcard,c2,round,trump)){
-                cout << p1->get_name() << "passes" << endl;
+                cout << p1->get_name() << " passes" << endl;
                 return 2;
               }
               else if(p3->make_trump(upcard,c3,round,trump)){
-                cout << p2->get_name() << "passes" << endl;
+                cout << p2->get_name() << " passes" << endl;
                 return 3;
               }
               else if(p4->make_trump(upcard,c4,round,trump)){
-                cout << p3->get_name() << "passes" << endl;
+                cout << p3->get_name() << " passes" << endl;
                 return 4;
             }
             }
           }
           if(c1 == true){
             if(p2->make_trump(upcard,c1,round,trump)){
-              return 1;
-            }
-          
-            else if(p3->make_trump(upcard,c2,round,trump)){
-              cout << p2->get_name() << "passes" << endl;
               return 2;
             }
           
-            else if(p4->make_trump(upcard,c3,round,trump)){
-              cout << p2->get_name() << "passes" << endl;
-              cout << p3->get_name() << "passes" << endl;
+            else if(p3->make_trump(upcard,c2,round,trump)){
+              cout << p2->get_name() << " passes" << endl;
               return 3;
             }
           
-            else if(p1->make_trump(upcard,c4,round,trump)){
-                cout << p2->get_name() << "passes" << endl;
-                cout << p3->get_name() << "passes" << endl;
-                cout << p4->get_name() << "passes" << endl;
+            else if(p4->make_trump(upcard,c3,round,trump)){
+              cout << p2->get_name() << " passes" << endl;
+              cout << p3->get_name() << " passes" << endl;
               return 4;
+            }
+          
+            else if(p1->make_trump(upcard,c4,round,trump)){
+                cout << p2->get_name() << " passes" << endl;
+                cout << p3->get_name() << " passes" << endl;
+                cout << p4->get_name() << " passes" << endl;
+              return 1;
             }
             else{
               cout << p2->get_name() << " passes" << endl;
@@ -330,15 +372,15 @@ class Game{
                 return 2;
               }
               else if(p3->make_trump(upcard,c2,round,trump)){
-                cout << p2->get_name() << "passes" << endl;
+                cout << p2->get_name() << " passes" << endl;
                 return 3;
               }
               else if(p4->make_trump(upcard,c3,round,trump)){
-                cout << p3->get_name() << "passes" << endl;
+                cout << p3->get_name() << " passes" << endl;
                 return 4;
               }
               else if(p1->make_trump(upcard,c4,round,trump)){
-                cout << p4->get_name() << "passes" << endl;
+                cout << p4->get_name() << " passes" << endl;
                 return 1;
             }
             }
@@ -349,20 +391,20 @@ class Game{
             }
           
             else if(p4->make_trump(upcard,c2,round,trump)){
-              cout << p3->get_name() << "passes" << endl;
+              cout << p3->get_name() << " passes" << endl;
               return 4;
             }
           
             else if(p1->make_trump(upcard,c3,round,trump)){
-              cout << p3->get_name() << "passes" << endl;
-              cout << p4->get_name() << "passes" << endl;
+              cout << p3->get_name() << " passes" << endl;
+              cout << p4->get_name() << " passes" << endl;
               return 1;
             }
           
             else if(p2->make_trump(upcard,c4,round,trump)){
-                cout << p3->get_name() << "passes" << endl;
-                cout << p4->get_name() << "passes" << endl;
-                cout << p1->get_name() << "passes" << endl;
+                cout << p3->get_name() << " passes" << endl;
+                cout << p4->get_name() << " passes" << endl;
+                cout << p1->get_name() << " passes" << endl;
               return 2;
             }
             else{
@@ -375,15 +417,15 @@ class Game{
                 return 3;
               }
               else if(p4->make_trump(upcard,c2,round,trump)){
-                cout << p3->get_name() << "passes" << endl;
+                cout << p3->get_name() << " passes" << endl;
                 return 4;
               }
               else if(p1->make_trump(upcard,c3,round,trump)){
-                cout << p4->get_name() << "passes" << endl;
+                cout << p4->get_name() << " passes" << endl;
                 return 1;
               }
               else if(p2->make_trump(upcard,c4,round,trump)){
-                cout << p1->get_name() << "passes" << endl;
+                cout << p1->get_name() << " passes" << endl;
                 return 2;
             }
             }
@@ -394,20 +436,20 @@ class Game{
             }
           
             else if(p1->make_trump(upcard,c2,round,trump)){
-              cout << p4->get_name() << "passes" << endl;
+              cout << p4->get_name() << " passes" << endl;
               return 1;
             }
           
             else if(p2->make_trump(upcard,c3,round,trump)){
-              cout << p4->get_name() << "passes" << endl;
-              cout << p1->get_name() << "passes" << endl;
+              cout << p4->get_name() << " passes" << endl;
+              cout << p1->get_name() << " passes" << endl;
               return 2;
             }
           
             else if(p3->make_trump(upcard,c4,round,trump)){
-                cout << p4->get_name() << "passes" << endl;
-                cout << p1->get_name() << "passes" << endl;
-                cout << p2->get_name() << "passes" << endl;
+                cout << p4->get_name() << " passes" << endl;
+                cout << p1->get_name() << " passes" << endl;
+                cout << p2->get_name() << " passes" << endl;
               return 3;
             }
             else{
@@ -420,15 +462,15 @@ class Game{
                 return 4;
               }
               else if(p1->make_trump(upcard,c2,round,trump)){
-                cout << p4->get_name() << "passes" << endl;
+                cout << p4->get_name() << " passes" << endl;
                 return 1;
               }
               else if(p2->make_trump(upcard,c3,round,trump)){
-                cout << p1->get_name() << "passes" << endl;
+                cout << p1->get_name() << " passes" << endl;
                 return 2;
               }
               else if(p3->make_trump(upcard,c4,round,trump)){
-                cout << p2->get_name() << "passes" << endl;
+                cout << p2->get_name() << " passes" << endl;
                 return 3;
             }
             }
@@ -446,22 +488,25 @@ class Game{
       
         cout << "Hand " << hand << "\n";
         hand += 1;
-        cout << players[(dealer - 1) % 4]->get_name() << " deals" << "\n";
-        int trump_maker = make_trump(players[0],players[1],players[2],players[3],upcard,trump);
-        if (trump_maker % 4 == 0 || trump_maker % 4 == 2) {
+        cout << players[(dealer) % 4]->get_name() << " deals" << "\n";
+        int trump_maker = make_trump(players[0],players[1],\
+                                     players[2],players[3],upcard,trump);
+        if (trump_maker == 1 || trump_maker == 3) {
             trump_team = 1;
         }
-        else if (trump_maker % 4 == 1 || trump_maker % 4 == 3) {
+        else if (trump_maker == 2 || trump_maker == 4) {
             trump_team = 2;
         }
 
-        cout << players[trump_maker - 1]->get_name() << " orders up " << trump << "\n" << "\n";
+        cout << players[trump_maker - 1]->get_name() \
+        << " orders up " << trump << "\n" << "\n";
         //to the left of dealer leads off
-        trick_winner = play_trick(trump, (dealer) % 4);
+        trick_winner = play_trick(trump, (dealer % 4) + 1);
         cout << players[trick_winner]->get_name() << " takes the trick" << endl << endl;
         for (int i = 1; i < 5; i++) {
             trick_winner = play_trick(trump, trick_winner);
-            cout << players[trick_winner]->get_name() << " takes the trick" << endl << endl;
+            cout << players[trick_winner]->get_name() << \
+            " takes the trick" << endl << endl;
             if (trick_winner == 1 || trick_winner == 3) {
                 tricks_won_t1++;
             }
@@ -490,12 +535,16 @@ class Game{
                 points_t1++;
             }
         }
-        cout << players[0]->get_name() << " and " << players[2]->get_name() << " have "<< points_t1 << " points\n" << players[1]->get_name() << " and " << players[3]->get_name() << " have " << points_t2 << " points\n";
+        cout << players[0]->get_name() << " and " << players[2]->get_name() << " have "\
+        << points_t1 << " points\n" << players[1]->get_name() \
+        << " and " << players[3]->get_name() << " have "\
+        << points_t2 << " points\n";
         cout << "\n" ;
     }
     //need to know who leads and what the trump is
     //needs to return who won the hand
-    int play_trick(string trump, int lead) {
+    int play_trick(string trump, int led) {
+        int lead = led % 4;
         Card c1 = players[lead % 4]->lead_card(trump);
         cout << c1 << " led by " << players[lead]->get_name() << endl;
         
@@ -524,18 +573,23 @@ class Game{
     }
     
     Card trick_winner(Card c1, Card c2, Card c3, Card c4, string trump) {
-        if(c1.is_trump(trump) || c2.is_trump(trump) || c3.is_trump(trump) || c4.is_trump(trump)){
-          if (!Card_less(c1, c2, trump) && !Card_less(c1, c3, trump) && !Card_less(c1, c4, trump)) {
+        if(c1.is_trump(trump) || c2.is_trump(trump) \
+           || c3.is_trump(trump) || c4.is_trump(trump)){
+          if (!Card_less(c1, c2, trump) && \
+              !Card_less(c1, c3, trump) && !Card_less(c1, c4, trump)) {
               return c1;
           }
-          else if (!Card_less(c2, c1, trump) && !Card_less(c2, c3, trump) && !Card_less(c2, c4, trump)) {
+          else if (!Card_less(c2, c1, trump) && \
+                   !Card_less(c2, c3, trump) && !Card_less(c2, c4, trump)) {
             return c2;
         }
-          else if (!Card_less(c3, c1, trump) && !Card_less(c3, c2, trump) && !Card_less(c3, c4, trump)) {
+          else if (!Card_less(c3, c1, trump) && \
+                   !Card_less(c3, c2, trump) && !Card_less(c3, c4, trump)) {
             return c3;
         }
         
-          else if (!Card_less(c3, c1, trump) && !Card_less(c3, c2, trump) && !Card_less(c3, c4, trump)) {
+          else if (!Card_less(c3, c1, trump) && \
+                   !Card_less(c3, c2, trump) && !Card_less(c3, c4, trump)) {
             return c3;
         }
           else {
@@ -544,10 +598,12 @@ class Game{
     }
         else{
           string the_suit = c1.get_suit();
-          if((c2.get_suit() != the_suit) && (c3.get_suit() != the_suit) && (c4.get_suit() != the_suit)){
+          if((c2.get_suit() != the_suit) && (c3.get_suit()\
+                                             != the_suit) && (c4.get_suit() != the_suit)){
               return c1;
           }
-          else if((c2.get_suit() == the_suit) && (c3.get_suit() != the_suit) && (c4.get_suit() != the_suit)){
+          else if((c2.get_suit() == the_suit) && \
+                  (c3.get_suit() != the_suit) && (c4.get_suit() != the_suit)){
             if(operator>(c2,c1)){
               return c2;
             }
@@ -555,7 +611,8 @@ class Game{
               return c1;
             }
           }
-          else if((c2.get_suit() != the_suit) && (c3.get_suit() == the_suit) && (c4.get_suit() != the_suit)){
+          else if((c2.get_suit() != the_suit) && \
+                  (c3.get_suit() == the_suit) && (c4.get_suit() != the_suit)){
             if(operator>(c3,c1)){
               return c3;
             }
@@ -563,7 +620,8 @@ class Game{
               return c1;
             }
           }
-          else if((c2.get_suit() != the_suit) && (c3.get_suit() != the_suit) && (c4.get_suit() == the_suit)){
+          else if((c2.get_suit() != the_suit) && \
+                  (c3.get_suit() != the_suit) && (c4.get_suit() == the_suit)){
             if(operator>(c4,c1)){
               return c4;
             }
@@ -571,7 +629,8 @@ class Game{
               return c1;
             }
           } 
-          else if((c2.get_suit() != the_suit) && (c3.get_suit() == the_suit) && (c4.get_suit() == the_suit)){
+          else if((c2.get_suit() != the_suit) && \
+                  (c3.get_suit() == the_suit) && (c4.get_suit() == the_suit)){
             if(operator>(c3,c4)){
               if(operator>(c3,c1)){
                 return c3;
@@ -589,7 +648,8 @@ class Game{
               }
             }
         }
-          else if((c2.get_suit() == the_suit) && (c3.get_suit() != the_suit) && (c4.get_suit() == the_suit)){
+          else if((c2.get_suit() == the_suit) && \
+                  (c3.get_suit() != the_suit) && (c4.get_suit() == the_suit)){
             if(operator>(c2,c4)){
               if(operator>(c2,c1)){
                 return c2;
@@ -607,7 +667,8 @@ class Game{
               }
             }
         }
-          else if((c2.get_suit() == the_suit) && (c3.get_suit() == the_suit) && (c4.get_suit() != the_suit)){
+          else if((c2.get_suit() == the_suit) && \
+                  (c3.get_suit() == the_suit) && (c4.get_suit() != the_suit)){
             if(operator>(c3,c2)){
               if(operator>(c3,c1)){
                 return c3;
@@ -625,7 +686,8 @@ class Game{
               }
             }
         }
-        else if((c2.get_suit() == the_suit) && (c3.get_suit() == the_suit) && (c4.get_suit() == the_suit)){
+        else if((c2.get_suit() == the_suit) && \
+                (c3.get_suit() == the_suit) && (c4.get_suit() == the_suit)){
             if(operator>(c3,c2) && operator>(c3,c4)){
               if(operator>(c3,c1)){
                 return c3;
@@ -663,7 +725,8 @@ class Game{
 
 
 int main(int argc, char **argv) {
-    // ./euchre.exe pack.in shuffle 10 Edsger Simple Fran Simple Gabriel Simple Herb Simple
+    // ./euchre.exe pack.in shuffle 10 Edsger
+    //Simple Fran Simple Gabriel Simple Herb Simple
     // if(argc != 12){
     //   cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
     //   << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
@@ -745,9 +808,11 @@ int main(int argc, char **argv) {
 
 // -Read in all inputs through argv
 // -Initialize players and pack
-// -Make a new game with constructor that has these players, pack, plus shuffle instructions and amount of turns
+// -Make a new game with constructor that has these players
+//, pack, plus shuffle instructions and amount of turns
 
-// -The game class will then run the whole game, with a loop that runs every trick, running for the number of turns provided
+// -The game class will then run the whole game,
+//with a loop that runs every trick, running for the number of turns provided
 // -the play function will do this and will probably be the bulk of the code
 
 // -We might need a system to track points and declare a winner

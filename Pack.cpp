@@ -88,6 +88,19 @@ void Pack::shuffle(){
             }
         next = 0;
     }
+//    int half_pack_size = PACK_SIZE / 2;
+//    for (int count = 0; count < 7; count++) {
+//        std::vector<Card> new_cards;
+//        for (int i = 0; i < PACK_SIZE; i++) {
+//            new_cards.push_back(cards[i]);
+//        }
+//        for (int a = 0; a < 7; a++) {
+//            for (int i = 0; i < PACK_SIZE; i += 2) {
+//                cards[i] = new_cards[(i / 2) + half_pack_size];
+//                cards[i + 1] = new_cards[i / 2];
+//            }
+//        }
+//    }
 }
 
 // EFFECTS: returns true if there are no more cards left in the pack
